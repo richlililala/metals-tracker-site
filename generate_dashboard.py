@@ -739,6 +739,230 @@ SOURCE_IR_STYLES = {
 }
 
 
+# ── 产品化配置（可直接改这里换品牌/联系方式）─────────────────────────────────
+BRAND = {
+    "name":    "PGM Insight",
+    "name_cn": "铂族金属价格情报",
+    "tagline": "钌 · 铱 · 钌粉 — 全链路价格追踪、归因分析与市场情报",
+    "email":   "richlililala@gmail.com",
+}
+
+# ── 价格变动归因（编辑性内容，基于行业报告分析；最新在前）──────────────────────
+PRICE_EVENTS = [
+    {"date": "2026-05-29", "metal": "钌", "frm": 1550, "to": 1500,
+     "dim": "需求 · 板块", "tag": "板块重置延续 · 化工需求疲软",
+     "detail": "PGM 板块「价格重置」延续（Heraeus：2026 上半年整体下行）。钌端化工催化采购走弱"
+               "（Johnson Matthey：2026 钌需求 −6%），盖过了 AI 数据中心硬盘需求创五年新高的利好"
+               "——所以这一跌的主因是<b>化工</b>，而非 AI/存储端。"},
+    {"date": "2026-05-27", "metal": "铱", "frm": 7250, "to": 7100,
+     "dim": "需求 · 替代", "tag": "工业需求走弱 · 替代技术压顶",
+     "detail": "绿氢 PEM 电解槽采购低于预期、工业需求转弱；牛津大学将<b>铱用量削减 70%</b> 的"
+               "减量化突破给高价封顶，加速回调。"},
+    {"date": "2026-05-12", "metal": "钌", "frm": 1650, "to": 1550,
+     "dim": "市场情绪", "tag": "投机多头获利了结",
+     "detail": "年初 +184% 暴涨后，PGM ETF 与商品基金在高位止盈，现货买气转谨慎，做空力量阶段性主导。"},
+    {"date": "2026-04-28", "metal": "铱", "frm": 7800, "to": 7500,
+     "dim": "需求 · 绿氢", "tag": "绿氢兑现慢于预期",
+     "detail": "市场对绿氢电解槽 2026 大规模放量的预期降温，提前对铱最大的新兴需求重新定价。"},
+    {"date": "2026-04-21", "metal": "钌", "frm": 1750, "to": 1700,
+     "dim": "板块 · 宏观", "tag": "板块价格重置启动",
+     "detail": "铂金 1 月创历史新高后，整个铂族金属同步见顶回落；美元偏强、制造业 PMI 承压共同施压。"},
+    {"date": "2026-03-12", "metal": "钌", "frm": 1400, "to": 1750, "peak": True,
+     "dim": "投机买盘", "tag": "年内见顶（月内 +25%）",
+     "detail": "供给刚性（副产品）叠加 AI / 数据中心叙事，投机性买盘把钌推上年内高点 $1,750，"
+               "铱同步见顶 $8,000。此后转入回调。"},
+]
+
+
+def _mailto(subject: str, body: str = "") -> str:
+    from urllib.parse import quote
+    url = f"mailto:{BRAND['email']}?subject={quote(subject)}"
+    if body:
+        url += f"&body={quote(body)}"
+    return url
+
+
+def build_hero_html(analysis, powder) -> str:
+    """产品首屏：价值主张 + 关键数据 + 转化按钮。"""
+    ru = analysis.get("Ruthenium", {})
+    ir = analysis.get("Iridium", {})
+    ru_price = f"${ru.get('current', 0):,.0f}" if ru else "—"
+    ir_price = f"${ir.get('current', 0):,.0f}" if ir else "—"
+    powder_price = f"¥{powder[0][2]:,.0f}/g" if powder else "—"
+
+    def chg(v):
+        cls = "up" if v > 0 else "down"
+        arr = "▲" if v > 0 else "▼"
+        return f'<span class="hero-chg {cls}">{arr} {abs(v):.1f}%</span>'
+
+    return f"""
+<section id="hero" class="hero">
+  <div class="hero-eyebrow">PGM PRICE INTELLIGENCE · 铂族金属价格情报</div>
+  <h1 class="hero-title">{BRAND['name_cn']}</h1>
+  <p class="hero-tagline">{BRAND['tagline']}</p>
+  <p class="hero-sub">每个交易日自动追踪钌・铱国际定盘价与中国钌粉现货，配套<strong>归因分析</strong>与
+  <strong>市场情报</strong>——把贵金属行情，变成你能直接拿去和客户对话的标准化工具。</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="hs-label">钌 Ru</span><span class="hs-val">{ru_price}</span>{chg(ru.get('chg30', 0))}<span class="hs-unit">/oz · 30天</span></div>
+    <div class="hero-stat"><span class="hs-label">铱 Ir</span><span class="hs-val">{ir_price}</span>{chg(ir.get('chg30', 0))}<span class="hs-unit">/oz · 30天</span></div>
+    <div class="hero-stat"><span class="hs-label">钌粉</span><span class="hs-val">{powder_price}</span><span class="hs-unit">中国现货</span></div>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#subscribe">订阅每日行情 →</a>
+    <a class="btn btn-ghost" href="#subscribe">预约演示 / 咨询</a>
+    <button class="btn btn-chat" onclick="openQA()">💬 问问行情助手</button>
+  </div>
+  <div class="hero-trust">数据来源：Umicore · Johnson Matthey · BASF · 91金属网　|　每个纽约交易日 10:00 自动更新</div>
+</section>"""
+
+
+def build_attribution_html() -> str:
+    """价格变动归因：每一笔涨跌对应原因（回答「为什么跌了」）。"""
+    color = {"钌": "#e8a838", "铱": "#4f8ef7"}
+    items = ""
+    for e in PRICE_EVENTS:
+        c = color.get(e["metal"], "#94a3b8")
+        delta = e["to"] - e["frm"]
+        pct = delta / e["frm"] * 100
+        up = delta > 0
+        arr = "▲" if up else "▼"
+        cls = "up" if up else "down"
+        peak = '<span class="evt-peak">高点</span>' if e.get("peak") else ""
+        items += f"""
+        <div class="evt" style="border-left-color:{c}">
+          <div class="evt-top">
+            <span class="evt-date">{e['date']}</span>
+            <span class="evt-metal" style="color:{c}">{e['metal']}</span>
+            <span class="evt-move">${e['frm']:,} → ${e['to']:,}</span>
+            <span class="evt-chg {cls}">{arr} {abs(pct):.1f}%</span>
+            <span class="evt-dim">{e['dim']}</span>{peak}
+          </div>
+          <div class="evt-tag">{e['tag']}</div>
+          <div class="evt-detail">{e['detail']}</div>
+        </div>"""
+    return f"""
+<div class="attr-wrap">
+  <div class="section-title">
+    <span class="section-icon">🧭</span> 价格变动归因
+    <span class="section-date">每一笔涨跌 · 对应原因</span>
+  </div>
+  <div class="attr-intro">看到价格变化，想知道「为什么」？这里按时间列出每一笔显著变动，并标注最可能的驱动因素
+  （基于 Johnson Matthey / Heraeus / SFA 等行业报告分析，而非逐笔新闻）。</div>
+  <div class="evt-list">{items}</div>
+</div>"""
+
+
+def build_cta_html() -> str:
+    """订阅 + 预约 + 套餐（核心转化）。"""
+    demo = _mailto("预约演示 / 咨询 — PGM Insight",
+                   "我想预约一次 15 分钟的演示/咨询。\n公司：\n关注品种：\n联系方式：")
+    pro = _mailto("专业版询价 — PGM Insight", "我想了解专业版（每日推送 + 预警 + 报告）的报价。")
+    ent = _mailto("企业版咨询 — PGM Insight", "我想了解企业版（定制看板 / API / 咨询）。")
+    return f"""
+<div class="cta-wrap">
+  <div class="section-title"><span class="section-icon">📬</span> 订阅 · 预约
+    <span class="section-date">把行情变成你的销售工具</span>
+  </div>
+  <div class="cta-grid">
+    <div class="cta-card">
+      <div class="cta-card-title">📈 每日行情订阅</div>
+      <p class="cta-card-sub">每个交易日把钌・铱・钌粉最新价、涨跌与归因摘要发到你邮箱。</p>
+      <ul class="cta-list">
+        <li>钌 / 铱国际定盘价 + 中国钌粉现货</li>
+        <li>当日涨跌归因 + 关键事件</li>
+        <li>异动预警（突破阈值即时提醒）</li>
+      </ul>
+      <div class="sub-form">
+        <input id="subEmail" type="email" placeholder="you@company.com" class="sub-input">
+        <button class="btn btn-primary" onclick="submitSubscribe()">订阅</button>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div class="cta-card-title">🤝 预约演示 / 咨询</div>
+      <p class="cta-card-sub">想定制品种、定制报告，或把它接入你的销售流程？聊 15 分钟。</p>
+      <ul class="cta-list">
+        <li>按你的品种 / 客户定制看板</li>
+        <li>深度研究与一对一市场咨询</li>
+        <li>API / 私有部署 / 白标</li>
+      </ul>
+      <a class="btn btn-primary" href="{demo}">预约演示 / 咨询 →</a>
+    </div>
+  </div>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">免费版</div>
+      <div class="plan-price">¥0</div>
+      <ul class="plan-feat"><li>在线看板浏览</li><li>每日价格 + 走势图</li><li>基础归因分析</li></ul>
+      <a class="btn btn-ghost" href="#hero">立即使用</a>
+    </div>
+    <div class="plan plan--featured">
+      <div class="plan-badge">最受欢迎</div>
+      <div class="plan-name">专业版</div>
+      <div class="plan-price">联系询价</div>
+      <ul class="plan-feat"><li>邮件 / 微信每日推送</li><li>异动预警</li><li>钌粉现货 + 多源对比</li><li>季度深度报告</li></ul>
+      <a class="btn btn-primary" href="{pro}">询价</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">企业版</div>
+      <div class="plan-price">定制</div>
+      <ul class="plan-feat"><li>定制品种 / 客户看板</li><li>API + 私有部署</li><li>一对一市场咨询</li></ul>
+      <a class="btn btn-ghost" href="{ent}">联系我们</a>
+    </div>
+  </div>
+</div>"""
+
+
+def build_qa_assistant_html(analysis, powder) -> str:
+    """对话式行情助手（内置问答，模拟销售对话；纯前端可离线）。"""
+    import json as _json
+    ru = analysis.get("Ruthenium", {})
+    ir = analysis.get("Iridium", {})
+    ru_cur, ru_peak, ru_cp = ru.get('current', 0), ru.get('peak_price', 0), ru.get('chg_peak', 0)
+    ir_cur, ir_peak, ir_cp = ir.get('current', 0), ir.get('peak_price', 0), ir.get('chg_peak', 0)
+    powder_p = powder[0][2] if powder else 0
+    qa = [
+        {"q": "为什么钌最近跌了？",
+         "a": f"钌现报 <b>${ru_cur:,.0f}</b>，较年内高点 ${ru_peak:,.0f} 回落 {abs(ru_cp):.1f}%。<br><br>"
+              "两个主因：<br>① <b>板块重置</b>——铂金 1 月创新高后整个 PGM 同步回调（Heraeus 预警 2026 上半年下行）；<br>"
+              "② <b>化工需求走弱</b>——Johnson Matthey 预计 2026 钌需求 −6%，化工催化用量下降。<br><br>"
+              "⚠️ 钌在 AI 数据中心硬盘的需求其实创<b>五年新高</b>（利好），所以这是化工拖累、不是 AI 端的问题。"},
+        {"q": "为什么铱最近跌了？",
+         "a": f"铱现报 <b>${ir_cur:,.0f}</b>，较高点 ${ir_peak:,.0f} 回落 {abs(ir_cp):.1f}%。"
+              "主因是<b>绿氢电解槽需求降温</b>（PEM 采购低于预期）+ <b>替代技术压顶</b>"
+              "（牛津大学把铱用量削减 70%）。"},
+        {"q": "钌粉和国际钌价什么关系？",
+         "a": f"国内钌粉现货约 <b>¥{powder_p:,.0f}/克</b>（91金属网），国际钌定盘价 ${ru_cur:,.0f}/oz"
+              "（1 oz = 31.1 g）。钌粉≈国际价换算成人民币/克后叠加加工与流通溢价；两者走势同步，"
+              "但钌粉对国内供需与汇率更敏感。"},
+        {"q": "后市怎么看？",
+         "a": "<b>短期承压</b>：板块重置未结束、绿氢兑现慢、化工偏弱——钌看 $1,400 支撑、铱看 $6,800。<br>"
+              "<b>长期看多</b>：基本面仍是短缺（钌 2026 缺口约 20.3 万 oz），钌受 AI 硬盘拉动、"
+              "铱看绿氢规模化，机构视当前为买点而非反转。"},
+        {"q": "数据多久更新？可靠吗？",
+         "a": "主来源 <b>Umicore 官方定盘价</b>，每个交易日更新；另有 Johnson Matthey、BASF、"
+              "91金属网（钌粉）多源对比。系统每个<b>纽约工作日 10:00 自动抓取</b>并重算归因。"},
+        {"q": "怎么订阅？有什么套餐？",
+         "a": "免费版可在线浏览；<b>专业版</b>含邮件/微信每日推送、异动预警、季度报告；"
+              "<b>企业版</b>支持定制看板与 API。下方「订阅 · 预约」填邮箱即可，或预约 15 分钟演示 👇"},
+    ]
+    chips = "".join(f'<button class="qa-chip" data-qi="{i}">{x["q"]}</button>'
+                    for i, x in enumerate(qa))
+    data_json = _json.dumps(qa, ensure_ascii=False)
+    return f"""
+<button id="qaLauncher" class="qa-launcher" onclick="toggleQA()">💬 行情助手</button>
+<div id="qaPanel" class="qa-panel" aria-hidden="true">
+  <div class="qa-head">
+    <span class="qa-title">💬 PGM 行情助手</span>
+    <button class="qa-close" onclick="toggleQA()" aria-label="关闭">✕</button>
+  </div>
+  <div id="qaBody" class="qa-body">
+    <div class="qa-msg bot">你好 👋 我是 PGM 行情助手。想了解什么？点下面的问题——</div>
+  </div>
+  <div class="qa-chips">{chips}</div>
+</div>
+<script type="application/json" id="qaData">{data_json}</script>"""
+
+
 def build_html(rows, latest, recent, analysis, source_compare, powder, today_alerts=None):
     chart_series = build_chart_data(rows)
     today = date.today().strftime("%Y-%m-%d")
@@ -847,13 +1071,14 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
 
   /* ── 顶部标题栏 ────────────────────────────────────────────────── */
   header {{
-    padding: 28px 24px 20px;
+    padding: 24px 24px 18px;
     display: flex;
-    align-items: baseline;
-    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
     border-bottom: 1px solid #1e2535;
   }}
-  header h1 {{ font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }}
+  header h1 {{ font-size: 20px; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; flex-shrink: 0; }}
   header .subtitle {{ color: #64748b; font-size: 12px; }}
   .src-tags {{ margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }}
   .src-tag {{
@@ -1242,6 +1467,117 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
   .alert-cond {{ font-size: 12px; font-weight: 600; color: #fca5a5; }}
   .alert-note {{ font-size: 11px; color: #94a3b8; line-height: 1.6; }}
 
+  /* ── 品牌 / 按钮 ──────────────────────────────────────────────── */
+  .brand-en {{ font-size: 13px; font-weight: 600; color: #64748b; letter-spacing: 0.04em; }}
+  .header-cta {{
+    margin-left: 8px; align-self: center; background: #e8a838; color: #0f1117;
+    font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 8px;
+    text-decoration: none; white-space: nowrap;
+  }}
+  .header-cta:hover {{ background: #f0b94e; }}
+  .toc-link--cta {{ color: #e8a838; font-weight: 700; }}
+  .btn {{
+    display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px;
+    font-weight: 600; border: none; border-radius: 9px; padding: 11px 20px; cursor: pointer;
+    text-decoration: none; transition: all .15s;
+  }}
+  .btn-primary {{ background: #e8a838; color: #0f1117; }}
+  .btn-primary:hover {{ background: #f0b94e; transform: translateY(-1px); }}
+  .btn-ghost {{ background: transparent; color: #e2e8f0; border: 1px solid #2d3748; }}
+  .btn-ghost:hover {{ border-color: #e8a838; color: #e8a838; }}
+  .btn-chat {{ background: #16324a; color: #7dd3fc; border: 1px solid #1e4a6b; }}
+  .btn-chat:hover {{ background: #1b3d59; }}
+
+  /* ── 产品首屏 Hero ────────────────────────────────────────────── */
+  .hero {{
+    background: linear-gradient(135deg, #171c2b 0%, #1a1f2e 55%, #1c2438 100%);
+    border: 1px solid #232a3a; border-radius: 16px; padding: 34px 32px; margin-bottom: 18px;
+  }}
+  .hero-eyebrow {{ font-size: 11px; letter-spacing: .14em; color: #e8a838; font-weight: 700; text-transform: uppercase; }}
+  .hero-title {{ font-size: 30px; font-weight: 800; color: #f1f5f9; margin: 10px 0 6px; letter-spacing: .02em; }}
+  .hero-tagline {{ font-size: 15px; color: #cbd5e1; font-weight: 600; }}
+  .hero-sub {{ font-size: 13px; color: #94a3b8; line-height: 1.8; margin-top: 10px; max-width: 780px; }}
+  .hero-sub strong {{ color: #e8a838; }}
+  .hero-stats {{ display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }}
+  .hero-stat {{ display: flex; align-items: baseline; gap: 7px; background: #0f1117; border: 1px solid #232a3a; border-radius: 10px; padding: 11px 16px; }}
+  .hs-label {{ font-size: 11px; color: #94a3b8; font-weight: 700; }}
+  .hs-val {{ font-size: 20px; font-weight: 800; color: #f1f5f9; }}
+  .hs-unit {{ font-size: 10px; color: #475569; }}
+  .hero-chg {{ font-size: 11px; font-weight: 700; }}
+  .hero-chg.up {{ color: #22c55e; }}
+  .hero-chg.down {{ color: #f87171; }}
+  .hero-cta {{ display: flex; flex-wrap: wrap; gap: 10px; }}
+  .hero-trust {{ font-size: 11px; color: #475569; margin-top: 16px; }}
+
+  /* ── 价格变动归因 ─────────────────────────────────────────────── */
+  .attr-wrap {{ background: #1a1f2e; border-radius: 12px; padding: 20px 22px; }}
+  .attr-intro {{ font-size: 12px; color: #94a3b8; line-height: 1.7; margin: 6px 0 16px; }}
+  .evt-list {{ display: flex; flex-direction: column; gap: 10px; }}
+  .evt {{ background: #0f1117; border-left: 3px solid #888; border-radius: 0 10px 10px 0; padding: 12px 16px; }}
+  .evt-top {{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 5px; }}
+  .evt-date {{ font-size: 12px; color: #64748b; font-variant-numeric: tabular-nums; }}
+  .evt-metal {{ font-size: 13px; font-weight: 800; }}
+  .evt-move {{ font-size: 12px; color: #cbd5e1; font-weight: 600; font-variant-numeric: tabular-nums; }}
+  .evt-chg {{ font-size: 12px; font-weight: 700; }}
+  .evt-chg.up {{ color: #22c55e; }}
+  .evt-chg.down {{ color: #f87171; }}
+  .evt-dim {{ font-size: 10px; color: #94a3b8; background: #1e2535; border-radius: 5px; padding: 2px 8px; margin-left: auto; }}
+  .evt-peak {{ font-size: 10px; color: #0f1117; background: #e8a838; border-radius: 5px; padding: 2px 8px; font-weight: 700; }}
+  .evt-tag {{ font-size: 13px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }}
+  .evt-detail {{ font-size: 12px; color: #94a3b8; line-height: 1.7; }}
+  .evt-detail b {{ color: #cbd5e1; }}
+
+  /* ── 订阅 · 预约 · 套餐 ───────────────────────────────────────── */
+  .cta-wrap {{ background: #1a1f2e; border-radius: 12px; padding: 20px 22px; }}
+  .cta-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 18px; }}
+  .cta-card {{ background: #0f1117; border: 1px solid #232a3a; border-radius: 12px; padding: 18px 20px; }}
+  .cta-card-title {{ font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 6px; }}
+  .cta-card-sub {{ font-size: 12px; color: #94a3b8; line-height: 1.7; margin-bottom: 12px; }}
+  .cta-list {{ list-style: none; margin: 0 0 14px; padding: 0; }}
+  .cta-list li {{ font-size: 12px; color: #cbd5e1; padding: 4px 0 4px 20px; position: relative; }}
+  .cta-list li::before {{ content: "✓"; color: #22c55e; position: absolute; left: 0; font-weight: 700; }}
+  .sub-form {{ display: flex; gap: 8px; }}
+  .sub-input {{ flex: 1; background: #1a1f2e; border: 1px solid #2d3748; border-radius: 9px; padding: 10px 12px; color: #e2e8f0; font: inherit; font-size: 13px; }}
+  .sub-input:focus {{ outline: none; border-color: #e8a838; }}
+  .plans {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
+  .plan {{ background: #0f1117; border: 1px solid #232a3a; border-radius: 12px; padding: 18px; text-align: center; position: relative; }}
+  .plan--featured {{ border-color: #e8a838; }}
+  .plan-badge {{ position: absolute; top: -9px; left: 50%; transform: translateX(-50%); background: #e8a838; color: #0f1117; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 6px; white-space: nowrap; }}
+  .plan-name {{ font-size: 14px; font-weight: 700; color: #f1f5f9; }}
+  .plan-price {{ font-size: 20px; font-weight: 800; color: #e8a838; margin: 6px 0 12px; }}
+  .plan-feat {{ list-style: none; margin: 0 0 14px; padding: 0; }}
+  .plan-feat li {{ font-size: 11px; color: #94a3b8; padding: 4px 0; border-bottom: 1px solid #161b27; }}
+
+  /* ── 对话式行情助手 ──────────────────────────────────────────── */
+  .qa-launcher {{
+    position: fixed; right: 22px; bottom: 22px; z-index: 60; background: #e8a838; color: #0f1117;
+    border: none; border-radius: 30px; padding: 13px 20px; font: inherit; font-size: 14px;
+    font-weight: 700; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.4); transition: all .15s;
+  }}
+  .qa-launcher:hover {{ transform: translateY(-2px); box-shadow: 0 10px 28px rgba(232,168,56,.4); }}
+  .qa-launcher.hidden {{ display: none; }}
+  .qa-panel {{
+    position: fixed; right: 22px; bottom: 22px; z-index: 61; width: 360px;
+    max-width: calc(100vw - 32px); height: 520px; max-height: calc(100vh - 44px);
+    background: #161b27; border: 1px solid #2d3748; border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0,0,0,.5); display: none; flex-direction: column; overflow: hidden;
+  }}
+  .qa-panel.open {{ display: flex; }}
+  .qa-head {{ display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #1a2030; border-bottom: 1px solid #232a3a; }}
+  .qa-title {{ font-size: 14px; font-weight: 700; color: #f1f5f9; }}
+  .qa-close {{ background: none; border: none; color: #64748b; font-size: 16px; cursor: pointer; }}
+  .qa-close:hover {{ color: #e2e8f0; }}
+  .qa-body {{ flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }}
+  .qa-msg {{ font-size: 13px; line-height: 1.7; padding: 10px 13px; border-radius: 12px; max-width: 88%; }}
+  .qa-msg.bot {{ background: #1e2535; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 4px; }}
+  .qa-msg.user {{ background: #e8a838; color: #0f1117; align-self: flex-end; font-weight: 600; border-bottom-right-radius: 4px; }}
+  .qa-msg.typing {{ color: #64748b; font-style: italic; }}
+  .qa-msg b {{ color: #e8a838; }}
+  .qa-msg.user b {{ color: #0f1117; }}
+  .qa-chips {{ display: flex; flex-wrap: wrap; gap: 7px; padding: 12px; border-top: 1px solid #232a3a; background: #12151f; max-height: 150px; overflow-y: auto; }}
+  .qa-chip {{ font: inherit; font-size: 12px; color: #cbd5e1; background: #1e2535; border: 1px solid #2d3748; border-radius: 16px; padding: 6px 12px; cursor: pointer; transition: all .15s; }}
+  .qa-chip:hover {{ border-color: #e8a838; color: #e8a838; }}
+
   /* ── 响应式 ─────────────────────────────────────────────────────── */
   @media (max-width: 900px) {{
     .page-layout {{ grid-template-columns: 1fr; }}
@@ -1250,19 +1586,28 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
     .src-legend {{ margin-top: 0; padding-top: 0; border-top: none; }}
     .toc-link {{ padding: 4px 8px; font-size: 11px; }}
   }}
+  @media (max-width: 760px) {{
+    .cta-grid {{ grid-template-columns: 1fr; }}
+    .plans {{ grid-template-columns: 1fr; }}
+    .hero-title {{ font-size: 24px; }}
+    .hero {{ padding: 24px 20px; }}
+    .qa-panel {{ width: calc(100vw - 24px); right: 12px; bottom: 12px; }}
+    .qa-launcher {{ right: 12px; bottom: 12px; }}
+  }}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>贵金属价格追踪</h1>
-  <span class="subtitle">钌 Ru · 铱 Ir · USD/troy oz</span>
+  <h1>{BRAND['name_cn']} <span class="brand-en">{BRAND['name']}</span></h1>
+  <span class="subtitle">钌 Ru · 铱 Ir · 钌粉 · USD/troy oz · CNY/g</span>
   <div class="src-tags">
     <span class="src-tag active">Umicore</span>
     <span class="src-tag">Johnson Matthey</span>
     <span class="src-tag">BASF</span>
     <span class="src-tag">91金属网</span>
   </div>
+  <a class="header-cta" href="#subscribe">订阅 / 预约</a>
 </header>
 
 <div class="page-layout">
@@ -1271,7 +1616,10 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
   <aside class="sidebar" aria-label="目录导航">
     <div class="toc-header">Contents</div>
 
-    <a class="toc-link active" href="#alerts">
+    <a class="toc-link active" href="#hero">
+      <span class="toc-icon">🏠</span>概览
+    </a>
+    <a class="toc-link" href="#alerts">
       <span class="toc-icon">⚠️</span>今日预警
     </a>
     <a class="toc-link" href="#prices">
@@ -1284,6 +1632,9 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
     <div class="toc-divider"></div>
     <div class="toc-section-label">分析</div>
 
+    <a class="toc-link" href="#attribution">
+      <span class="toc-icon">🧭</span>价格变动归因
+    </a>
     <a class="toc-link" href="#analysis">
       <span class="toc-icon">🔍</span>价格变化分析
     </a>
@@ -1299,6 +1650,11 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
     </a>
     <a class="toc-link" href="#history">
       <span class="toc-icon">🗓</span>近 30 天记录
+    </a>
+
+    <div class="toc-divider"></div>
+    <a class="toc-link toc-link--cta" href="#subscribe">
+      <span class="toc-icon">📬</span>订阅 · 预约
     </a>
 
     <!-- 数据源图例 -->
@@ -1326,6 +1682,9 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
   <!-- ── 主内容区 ── -->
   <main class="main-content">
 
+    <!-- 产品首屏 -->
+    {build_hero_html(analysis, powder)}
+
     <!-- 今日预警 -->
     {build_alert_section(today_alerts or [])}
 
@@ -1347,6 +1706,11 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
       </div>
       <canvas id="priceChart" height="80"></canvas>
       <div class="range-hint" id="rangeHint"></div>
+    </section>
+
+    <!-- 价格变动归因 -->
+    <section id="attribution">
+      {build_attribution_html()}
     </section>
 
     <!-- 价格分析 -->
@@ -1372,10 +1736,18 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
       </div>
     </section>
 
-    <div class="generated">生成于 {today} · python3 generate_dashboard.py</div>
+    <!-- 订阅 · 预约 -->
+    <section id="subscribe">
+      {build_cta_html()}
+    </section>
+
+    <div class="generated">{BRAND['name_cn']} · {BRAND['name']}　|　生成于 {today}　|　数据源 Umicore / JM / BASF / 91金属网</div>
 
   </main>
 </div>
+
+<!-- 对话式行情助手 -->
+{build_qa_assistant_html(analysis, powder)}
 
 <script>
 const datasets = {datasets_json};
@@ -1471,6 +1843,44 @@ function applyRange(key) {{
 document.querySelectorAll('.range-btn').forEach(b =>
   b.addEventListener('click', () => applyRange(b.dataset.range)));
 applyRange(DEFAULT_RANGE);
+
+/* ── 对话式行情助手 ── */
+const qaData = JSON.parse(document.getElementById('qaData').textContent);
+function toggleQA() {{
+  const p = document.getElementById('qaPanel');
+  const open = p.classList.toggle('open');
+  p.setAttribute('aria-hidden', open ? 'false' : 'true');
+  document.getElementById('qaLauncher').classList.toggle('hidden', open);
+}}
+function openQA() {{
+  const p = document.getElementById('qaPanel');
+  if (!p.classList.contains('open')) toggleQA();
+}}
+function qaAsk(i) {{
+  const item = qaData[i];
+  if (!item) return;
+  const body = document.getElementById('qaBody');
+  const u = document.createElement('div');
+  u.className = 'qa-msg user'; u.textContent = item.q; body.appendChild(u);
+  const t = document.createElement('div');
+  t.className = 'qa-msg bot typing'; t.textContent = '正在分析…'; body.appendChild(t);
+  body.scrollTop = body.scrollHeight;
+  setTimeout(() => {{
+    t.classList.remove('typing'); t.innerHTML = item.a;
+    body.scrollTop = body.scrollHeight;
+  }}, 450);
+}}
+document.querySelectorAll('.qa-chip').forEach(c =>
+  c.addEventListener('click', () => qaAsk(parseInt(c.dataset.qi))));
+
+/* ── 订阅（静态站点用 mailto 收集）── */
+function submitSubscribe() {{
+  const inp = document.getElementById('subEmail');
+  const email = inp ? inp.value.trim() : '';
+  const subj = encodeURIComponent('订阅每日钌铱行情 — PGM Insight');
+  const body = encodeURIComponent('我想订阅每日钌/铱/钌粉行情与归因摘要。\\n我的邮箱：' + email);
+  window.location.href = 'mailto:{BRAND['email']}?subject=' + subj + '&body=' + body;
+}}
 
 /* 侧边栏高亮当前节 */
 const tocLinks = document.querySelectorAll('.toc-link');
