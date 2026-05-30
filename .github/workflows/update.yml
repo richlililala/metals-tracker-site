@@ -1,0 +1,53 @@
+name: Update Dashboard
+
+# Runs Mon–Fri at 10:00 AM New York time
+# NYC = UTC-4 (EDT, Mar–Nov) or UTC-5 (EST, Nov–Mar)
+# Using 15:00 UTC → 10am EST / 11am EDT
+# A second trigger at 14:00 UTC catches 10am EDT during summer
+on:
+  schedule:
+    - cron: '0 15 * * 1-5'   # 10:00 AM EST (winter)
+    - cron: '0 14 * * 1-5'   # 10:00 AM EDT (summer)
+  workflow_dispatch:           # allow manual "Run workflow" from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch latest prices
+        run: python metals_tracker.py
+        # Umicore CSV API needs no key; JM/BASF/91jinshu scraped if available
+        # Set METALS_API_KEY secret in repo settings to enable Metals-API fallback
+
+      - name: Generate offline dashboard
+        run: python generate_dashboard.py --offline --no-open
+
+      - name: Update index.html
+        run: cp dashboard_offline.html index.html
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html metals_prices.db
+          # Only commit if something actually changed
+          git diff --staged --quiet || git commit -m "Auto-update $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push

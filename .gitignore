@@ -1,0 +1,6 @@
+dashboard_offline.html
+dashboard.html
+metals_report_*.pdf
+__pycache__/
+*.pyc
+.DS_Store
