@@ -187,6 +187,26 @@
   .chart-title { font-size: 13px; color: #94a3b8; margin-bottom: 14px; }
   canvas { width: 100% !important; }
 
+  /* 时间维度切换 */
+  .chart-head {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
+  }
+  .chart-head .chart-title { margin-bottom: 0; }
+  .range-tabs {
+    display: inline-flex; gap: 2px; padding: 3px;
+    background: #0f1117; border: 1px solid #232a3a; border-radius: 9px;
+  }
+  .range-btn {
+    font: inherit; font-size: 12px; font-weight: 600;
+    color: #94a3b8; background: transparent;
+    border: none; border-radius: 6px; padding: 5px 14px;
+    cursor: pointer; transition: all .15s;
+  }
+  .range-btn:hover { color: #e2e8f0; background: #1a2030; }
+  .range-btn.active { color: #0f1117; background: #e8a838; }
+  .range-hint { font-size: 11px; color: #475569; margin-top: 8px; text-align: right; }
+
   /* ── 分析 / 产业链区（公共）───────────────────────────────────── */
   .analysis-section,
   .sc-section {
@@ -261,6 +281,9 @@
   .bearish .outlook-tag { color: #f87171; }
   .bullish .outlook-tag { color: #34d399; }
   .outlook-item strong { color: #e2e8f0; }
+  .analysis-src {
+    margin-top: 12px; font-size: 11px; color: #475569; line-height: 1.7;
+  }
 
   /* ── 产业链地图 ─────────────────────────────────────────────────── */
   .sc-card { background: #1a1f2e; border-radius: 12px; padding: 20px 22px; }
@@ -370,6 +393,53 @@
 
   .generated { text-align: center; color: #334155; font-size: 10px; padding: 16px 0 24px; }
 
+  /* ── 预警区块 ──────────────────────────────────────────────────── */
+  .alert-bar {
+    border-radius: 10px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .alert-bar--clear {
+    background: #1a1f2e;
+    border-left: 4px solid #334155;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  .alert-bar--warn {
+    background: #1e1515;
+    border-left: 4px solid #f87171;
+  }
+  .alert-bar-top { display: flex; align-items: center; gap: 10px; }
+  .alert-bar-icon { font-size: 16px; flex-shrink: 0; }
+  .alert-bar-text { font-size: 13px; font-weight: 700; color: #e2e8f0; }
+  .alert-bar--clear .alert-bar-text { color: #64748b; }
+  .alert-items { display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+  .alert-item {
+    background: #261a1a;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .alert-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+  .alert-badge {
+    background: #f8717122;
+    color: #f87171;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .alert-cond { font-size: 12px; font-weight: 600; color: #fca5a5; }
+  .alert-note { font-size: 11px; color: #94a3b8; line-height: 1.6; }
+
   /* ── 响应式 ─────────────────────────────────────────────────────── */
   @media (max-width: 900px) {
     .page-layout { grid-template-columns: 1fr; }
@@ -399,7 +469,10 @@
   <aside class="sidebar" aria-label="目录导航">
     <div class="toc-header">Contents</div>
 
-    <a class="toc-link active" href="#prices">
+    <a class="toc-link active" href="#alerts">
+      <span class="toc-icon">⚠️</span>今日预警
+    </a>
+    <a class="toc-link" href="#prices">
       <span class="toc-icon">💰</span>实时价格
     </a>
     <a class="toc-link" href="#chart">
@@ -451,31 +524,49 @@
   <!-- ── 主内容区 ── -->
   <main class="main-content">
 
+    <!-- 今日预警 -->
+    
+<section id="alerts">
+  <div class="alert-bar alert-bar--clear">
+    <span class="alert-bar-icon">✅</span>
+    <span class="alert-bar-text">今日无重大价格变化</span>
+  </div>
+</section>
+
     <!-- 价格卡片 -->
     <section id="prices">
       <div class="cards">
         <div class="card" style="border-top: 4px solid #e8a838" id="prices">
             <div class="card-icon" style="color:#e8a838">◇</div>
             <div class="card-metal">钌 Ruthenium</div>
-            <div class="card-price">$1,550.00</div>
+            <div class="card-price">$1,500.00</div>
             <div class="card-unit">USD / troy oz</div>
-            <div class="card-date">截至 2026-05-22 · Umicore</div>
+            <div class="card-date">截至 2026-05-29 · Umicore</div>
             
         </div>
         <div class="card" style="border-top: 4px solid #4f8ef7" id="prices">
             <div class="card-icon" style="color:#4f8ef7">◆</div>
             <div class="card-metal">铱 Iridium</div>
-            <div class="card-price">$7,300.00</div>
+            <div class="card-price">$7,100.00</div>
             <div class="card-unit">USD / troy oz</div>
-            <div class="card-date">截至 2026-05-22 · Umicore</div>
+            <div class="card-date">截至 2026-05-29 · Umicore</div>
             
         </div></div>
     </section>
 
     <!-- 历史图表 -->
     <section id="chart" class="chart-section">
-      <div class="chart-title">历史价格走势 · 多数据源对比（实线=Umicore，虚线=JM/BASF）</div>
+      <div class="chart-head">
+        <div class="chart-title">历史价格走势 · 多数据源对比（实线=Umicore，虚线=JM/BASF）</div>
+        <div class="range-tabs" id="rangeTabs">
+          <button class="range-btn active" data-range="天">天</button>
+          <button class="range-btn" data-range="周">周</button>
+          <button class="range-btn" data-range="月">月</button>
+          <button class="range-btn" data-range="季度">季度</button>
+        </div>
+      </div>
       <canvas id="priceChart" height="80"></canvas>
+      <div class="range-hint" id="rangeHint"></div>
     </section>
 
     <!-- 价格分析 -->
@@ -484,7 +575,7 @@
 <div class="analysis-section">
   <div class="section-title">
     <span class="section-icon">🔍</span> 价格变化分析
-    <span class="section-date">基于 Umicore 官方数据 · 截至 2026-05-22</span>
+    <span class="section-date">基于 Umicore 官方数据 · 截至 2026-05-29</span>
   </div>
 
   <!-- 统计摘要 -->
@@ -493,44 +584,44 @@
           <div class="stat-name" style="color:#e8a838">钌 Ruthenium</div>
           <div class="stat-item">
             <span class="stat-label">当前</span>
-            <span class="stat-val">$1,550</span>
+            <span class="stat-val">$1,500</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">30 天前</span>
             <span class="stat-val">$1,700
-              &nbsp;<span style="color:#f87171">▼ 8.8%</span></span>
+              &nbsp;<span style="color:#f87171">▼ 11.8%</span></span>
           </div>
           <div class="stat-item">
             <span class="stat-label">年内高点</span>
             <span class="stat-val">$1,750
-              &nbsp;<span style="color:#f87171">▼ 11.4%</span><small style="color:#64748b"> (2026-03-12)</small></span>
+              &nbsp;<span style="color:#f87171">▼ 14.3%</span><small style="color:#64748b"> (2026-03-12)</small></span>
           </div>
           <div class="stat-item">
             <span class="stat-label">年内低点</span>
             <span class="stat-val">$615
-              &nbsp;<span style="color:#22c55e">▲ 152.0%</span><small style="color:#64748b"> (2025-05-23)</small></span>
+              &nbsp;<span style="color:#22c55e">▲ 143.9%</span><small style="color:#64748b"> (2025-05-23)</small></span>
           </div>
         </div>
         <div class="stat-row" style="border-left:3px solid #4f8ef7">
           <div class="stat-name" style="color:#4f8ef7">铱 Iridium</div>
           <div class="stat-item">
             <span class="stat-label">当前</span>
-            <span class="stat-val">$7,300</span>
+            <span class="stat-val">$7,100</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">30 天前</span>
-            <span class="stat-val">$7,800
-              &nbsp;<span style="color:#f87171">▼ 6.4%</span></span>
+            <span class="stat-val">$7,400
+              &nbsp;<span style="color:#f87171">▼ 4.1%</span></span>
           </div>
           <div class="stat-item">
             <span class="stat-label">年内高点</span>
             <span class="stat-val">$8,000
-              &nbsp;<span style="color:#f87171">▼ 8.8%</span><small style="color:#64748b"> (2026-03-12)</small></span>
+              &nbsp;<span style="color:#f87171">▼ 11.2%</span><small style="color:#64748b"> (2026-03-12)</small></span>
           </div>
           <div class="stat-item">
             <span class="stat-label">年内低点</span>
             <span class="stat-val">$4,100
-              &nbsp;<span style="color:#22c55e">▲ 78.0%</span><small style="color:#64748b"> (2025-05-23)</small></span>
+              &nbsp;<span style="color:#22c55e">▲ 73.2%</span><small style="color:#64748b"> (2025-05-23)</small></span>
           </div>
         </div></div>
 
@@ -538,82 +629,74 @@
   <div class="dims-grid">
         <div class="dim-card">
           <div class="dim-header">
-            <span class="dim-icon">⛏</span>
-            <span class="dim-title" style="color:#a78bfa">供给端 · 产量</span>
-          </div>
-          
-            <div class="point">
-              <div class="point-title" style="color:#a78bfa">南非垄断供应</div>
-              <div class="point-body">钌与铱均为铂族金属（PGM）开采的副产品，南非贡献全球供应量逾 80%。产量无法独立调节，完全随铂矿主矿开采节奏波动。</div>
-            </div>
-            <div class="point">
-              <div class="point-title" style="color:#a78bfa">2026 年产量回升</div>
-              <div class="point-body">南非矿业公司在 2025 年 PGM 价格反弹后改善了利润率，工程库存集中处理与新矿山（Waterberg 等）爬坡推动今年产量温和增长，供给端边际宽松。</div>
-            </div>
-            <div class="point">
-              <div class="point-title" style="color:#a78bfa">再生料供应增加</div>
-              <div class="point-body">欧洲汽车报废回收量回升，带动钌铱二次料供给小幅提升，进一步补充市场库存。</div>
-            </div>
-        </div>
-        <div class="dim-card">
-          <div class="dim-header">
             <span class="dim-icon">📉</span>
-            <span class="dim-title" style="color:#34d399">需求端 · 市场</span>
+            <span class="dim-title" style="color:#34d399">需求端 · 钌铱分别归因（核心）</span>
           </div>
           
             <div class="point">
-              <div class="point-title" style="color:#34d399">绿氢电解槽需求降温</div>
-              <div class="point-body">铱（PEM 电解槽阳极催化剂）与钌（AEM/SOEC 阴极材料）的最大新兴需求来自绿氢。然而 2025-2026 年全球绿氢项目大规模延期——高利率推高资本成本，欧盟 RED II 补贴落地迟缓，美国 IRA 执行存在不确定性，导致电解槽采购量远低于预期。铱年用量缺口估算从 2t 收窄至 0.8t。</div>
+              <div class="point-title" style="color:#34d399">钌 ← 化工催化需求下滑（主拖累）</div>
+              <div class="point-body">Johnson Matthey 2026 PGM 报告预计<strong>钌全年需求 −6%</strong>，主因<strong>化工板块</strong>（硝酸、氯碱催化等）用量收缩，是钌价回落的直接推手。</div>
             </div>
             <div class="point">
-              <div class="point-title" style="color:#34d399">汽车 & 电子需求平稳</div>
-              <div class="point-body">铱的传统用途（火花塞、坩埚、笔尖合金）需求稳而无增。钌在硬盘 MAMR 读写头的应用因 AI 数据中心扩张有一定支撑，但整体规模相对有限，无法对冲绿氢端的疲软。</div>
+              <div class="point-title" style="color:#34d399">钌 ← AI 硬盘需求其实是利好</div>
+              <div class="point-body">数据中心扩张带动硬盘（HDD 磁存储钌薄膜层）需求升至<strong>五年新高</strong>。⚠ 这是<strong>支撑项而非利空</strong>——钌的回调来自化工，不是 AI/存储端。</div>
+            </div>
+            <div class="point">
+              <div class="point-title" style="color:#34d399">铱 ← 绿氢电解槽需求降温（主因）</div>
+              <div class="point-body">「工业需求走弱 + PEM 电解槽消耗低于预期」是铱下跌的直接原因。绿氢项目兑现速度明显慢于此前炒作时所定价的预期。</div>
             </div>
             <div class="point">
               <div class="point-title" style="color:#34d399">库存去化周期</div>
-              <div class="point-body">部分中间商在 2025 年底高点抢购备货，目前仍处于去库阶段，短期内压制采购意愿，买方议价力增强。</div>
+              <div class="point-body">部分中间商在 2025 年底高点抢购备货，目前仍处去库阶段，短期压制采购意愿，买方议价力增强。</div>
             </div>
         </div>
         <div class="dim-card">
           <div class="dim-header">
-            <span class="dim-icon">🌐</span>
-            <span class="dim-title" style="color:#fb923c">国际形势 · 宏观</span>
+            <span class="dim-icon">🔄</span>
+            <span class="dim-title" style="color:#fb923c">板块重置 · 同步回调</span>
           </div>
           
             <div class="point">
-              <div class="point-title" style="color:#fb923c">美元走强压制价格</div>
-              <div class="point-body">贵金属以美元计价，2026 年初美联储推迟降息预期，美元指数维持强势，机械性压低以美元标价的 PGM 商品价格。利率每推迟降息一次，大宗商品的持有成本即上升，边际买盘减少。</div>
+              <div class="point-title" style="color:#fb923c">整个 PGM 板块「价格重置」</div>
+              <div class="point-body">Heraeus 2026 年度预测明确指出：<strong>2026 上半年 PGM 价格将整体下行重置</strong>。钌、铱 4 月起<strong>同步见顶、同步阴跌</strong>，正是板块级回调、而非单一金属供应事故。</div>
             </div>
             <div class="point">
-              <div class="point-title" style="color:#fb923c">全球制造业 PMI 承压</div>
-              <div class="point-body">美欧制造业 PMI 在 2026 年 Q1 整体低于荣枯线，工业需求预期走弱，市场提前定价需求侧的不确定性，导致投机性多头减仓。</div>
+              <div class="point-title" style="color:#fb923c">高位有大涨在先</div>
+              <div class="point-body">铂金 2026 年 1 月刚创历史新高，整个铂族金属在过去一年涨幅惊人；钌从 2025/5 低点 $615 → 2026/3 高点 $1,750（<strong>+184%</strong>），铱同期 +95%。涨多必有回，技术性挤泡沫。</div>
             </div>
             <div class="point">
-              <div class="point-title" style="color:#fb923c">南非能源与劳工局势改善</div>
-              <div class="point-body">Eskom 限电频率较 2024 年峰值显著下降，矿山开工率恢复，此前因停电导致的供应中断溢价部分消退，令铱、钌价格失去一个重要的地缘/基础设施支撑因素。</div>
-            </div>
-            <div class="point">
-              <div class="point-title" style="color:#fb923c">俄乌冲突影响趋于稳定</div>
-              <div class="point-body">俄罗斯铂族金属产量（主要为铂钯）的制裁扰动已被市场充分定价；钌铱主要产地在南非，对俄罗斯供应链的直接暴露有限。</div>
+              <div class="point-title" style="color:#fb923c">宏观面偏空</div>
+              <div class="point-body">2026 年初美元偏强、美欧制造业 PMI 承压，以美元计价的工业贵金属边际买盘减少，投机多头顺势减仓。</div>
             </div>
         </div>
         <div class="dim-card">
           <div class="dim-header">
-            <span class="dim-icon">📊</span>
-            <span class="dim-title" style="color:#38bdf8">市场情绪 · 周期</span>
+            <span class="dim-icon">⚗</span>
+            <span class="dim-title" style="color:#38bdf8">替代技术 · 压住高点</span>
           </div>
           
             <div class="point">
-              <div class="point-title" style="color:#38bdf8">年内大涨后的正常回调</div>
-              <div class="point-body">钌从 2025 年 5 月低点 $615 飙升至 2026 年 3 月高点 $1,750，涨幅达 +184%；铱同期从 $4,100 升至 $8,000（+95%）。Heraeus 等机构在年初即预警：2026 上半年将是「价格重置与整合」窗口期，当前回撤是健康的技术性修正，并非基本面逆转。</div>
+              <div class="point-title" style="color:#38bdf8">铱：减量化突破封顶价格</div>
+              <div class="point-body">牛津大学将 PEM 电解槽<strong>铱用量削减 70%</strong>，西北大学研发出可媲美铱的替代催化剂。金属越贵、买家越倾向减量/替代，直接给铱的投机高点封顶并加速回调。</div>
             </div>
             <div class="point">
-              <div class="point-title" style="color:#38bdf8">投机资金撤出</div>
-              <div class="point-body">PGM ETF 和大宗商品基金在高点获利了结，做空力量阶段性主导价格；现货市场买气偏谨慎，交易商倾向观望待确认方向后再建仓。</div>
+              <div class="point-title" style="color:#38bdf8">投机资金获利了结</div>
+              <div class="point-body">PGM ETF 与大宗商品基金在高点止盈，现货买气转谨慎，交易商倾向观望、待方向明朗再建仓。</div>
+            </div>
+        </div>
+        <div class="dim-card">
+          <div class="dim-header">
+            <span class="dim-icon">⛏</span>
+            <span class="dim-title" style="color:#a78bfa">供给端 · 平稳（非诱因）</span>
+          </div>
+          
+            <div class="point">
+              <div class="point-title" style="color:#a78bfa">供给稳定，这轮跌的是需求/情绪</div>
+              <div class="point-body">钌铱均为 PGM 副产品，南非贡献全球逾 80%，产量无法独立调节。本轮供给<strong>没有明显放量</strong>，因此价格走弱由需求与情绪驱动，而非供应过剩。</div>
             </div>
             <div class="point">
-              <div class="point-title" style="color:#38bdf8">长期结构性需求仍支撑</div>
-              <div class="point-body">SFA(Oxford) 等机构维持长期看多：绿氢电解槽一旦大规模商业化，钌铱需求或进入结构性短缺。当前调整被视为买点，而非趋势反转。</div>
+              <div class="point-title" style="color:#a78bfa">基本面仍是短缺（回调≠反转）</div>
+              <div class="point-body">Metals Focus 估 2026 年<strong>钌仍缺口约 20.3 万盎司</strong>，铱亦维持小幅短缺；供给弹性极低。SFA(Oxford)、JM 维持长期看多——当前是高位修正，不是趋势逆转。</div>
             </div>
         </div></div>
 
@@ -624,17 +707,21 @@
       <div class="outlook-grid">
         <div class="outlook-item bearish">
           <div class="outlook-tag">短期 · 承压</div>
-          <div>绿氢需求兑现慢于预期、南非产量回升、美元维持强势，
-          预计 2026 年 Q2-Q3 价格仍面临下行压力；<br>
+          <div>板块「价格重置」未结束（Heraeus：2026 上半年 PGM 整体下行）、
+          铱绿氢兑现慢 + 替代技术压顶、钌化工需求疲软，预计 Q2–Q3 仍有下行压力；<br>
           钌支撑位约 <strong>$1,400</strong>，铱关注 <strong>$6,800</strong>。</div>
         </div>
         <div class="outlook-item bullish">
           <div class="outlook-tag">长期 · 看多</div>
-          <div>一旦全球绿氢项目进入集中建设期（预计 2027 起），
-          铱铱需求将面临系统性短缺，供给弹性极低；<br>
-          钌在 AI 硬盘存储（MAMR）与氨合成催化领域亦具结构性增量。</div>
+          <div>基本面仍是<strong>短缺</strong>（钌 2026 缺口 ~20.3 万 oz、铱小幅短缺），供给弹性极低；<br>
+          钌受 <strong>AI 数据中心硬盘存储</strong>需求拉动（已创五年新高），
+          铱则看 <strong>绿氢 PEM 电解槽</strong>规模化商用——当前回调被机构视为买点而非反转。</div>
         </div>
       </div>
+    </div>
+    <div class="analysis-src">
+      数据来源：Johnson Matthey 2026 PGM 市场报告 · Heraeus 2026 贵金属预测 ·
+      Metals Focus · SFA (Oxford) · iMARC（铱价 2026）。价格走势基于 Umicore 官方数据。
     </div>
 </div>
     </section>
@@ -917,13 +1004,13 @@
       </tr></thead>
       <tbody>
         <tr>
-          <td class="p-date">2026-05-22</td>
+          <td class="p-date">2026-05-29</td>
           <td class="p-name"><a href="https://hq.91jinshu.com/price-htm-itemid-22.html" target="_blank" style="color:#e8a838">钌粉</a></td>
-          <td class="p-price">¥390.0<span class="p-unit">/g</span></td>
+          <td class="p-price">¥380.0<span class="p-unit">/g</span></td>
           <td class="p-supplier">—</td>
         </tr></tbody>
     </table>
-    <div class="sc-note">⚠ 均价 ¥390.0/g ≈ $1,685/troy oz（按 USD/CNY=7.2 估算，仅供参考）<br>
+    <div class="sc-note">⚠ 均价 ¥380.0/g ≈ $1,642/troy oz（按 USD/CNY=7.2 估算，仅供参考）<br>
       注：91金属网为中国有色金属行情平台，钌粉报价为市场参考价。
       国际市场计量单位为 troy oz（金衡盎司），1 troy oz = 31.1035 g。
     </div>
@@ -935,7 +1022,55 @@
       <div class="table-section">
         <div class="table-header">近 30 天记录（Umicore）</div>
         <table>
-          <tbody><tr class="date-row"><td colspan="4">2026-05-22</td></tr>
+          <tbody><tr class="date-row"><td colspan="4">2026-05-29</td></tr>
+        <tr>
+            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
+            <td style="text-align:right;font-weight:600">$7,100.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr>
+        <tr>
+            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
+            <td style="text-align:right;font-weight:600">$1,500.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr><tr class="date-row"><td colspan="4">2026-05-28</td></tr>
+        <tr>
+            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
+            <td style="text-align:right;font-weight:600">$7,200.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr>
+        <tr>
+            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
+            <td style="text-align:right;font-weight:600">$1,500.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr><tr class="date-row"><td colspan="4">2026-05-27</td></tr>
+        <tr>
+            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
+            <td style="text-align:right;font-weight:600">$7,250.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr>
+        <tr>
+            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
+            <td style="text-align:right;font-weight:600">$1,500.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr><tr class="date-row"><td colspan="4">2026-05-26</td></tr>
+        <tr>
+            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
+            <td style="text-align:right;font-weight:600">$7,300.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr>
+        <tr>
+            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
+            <td style="text-align:right;font-weight:600">$1,500.00</td>
+            <td style="text-align:right;color:#888">USD/troy oz</td>
+            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
+        </tr><tr class="date-row"><td colspan="4">2026-05-22</td></tr>
         <tr>
             <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
             <td style="text-align:right;font-weight:600">$7,300.00</td>
@@ -1139,80 +1274,39 @@
             <td style="text-align:right;font-weight:600">$1,700.00</td>
             <td style="text-align:right;color:#888">USD/troy oz</td>
             <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr><tr class="date-row"><td colspan="4">2026-04-29</td></tr>
-        <tr>
-            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
-            <td style="text-align:right;font-weight:600">$7,500.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr>
-        <tr>
-            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
-            <td style="text-align:right;font-weight:600">$1,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr><tr class="date-row"><td colspan="4">2026-04-28</td></tr>
-        <tr>
-            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
-            <td style="text-align:right;font-weight:600">$7,500.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr>
-        <tr>
-            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
-            <td style="text-align:right;font-weight:600">$1,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr><tr class="date-row"><td colspan="4">2026-04-27</td></tr>
-        <tr>
-            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
-            <td style="text-align:right;font-weight:600">$7,600.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr>
-        <tr>
-            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
-            <td style="text-align:right;font-weight:600">$1,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr><tr class="date-row"><td colspan="4">2026-04-24</td></tr>
-        <tr>
-            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
-            <td style="text-align:right;font-weight:600">$7,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr>
-        <tr>
-            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
-            <td style="text-align:right;font-weight:600">$1,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr><tr class="date-row"><td colspan="4">2026-04-23</td></tr>
-        <tr>
-            <td style="padding-left:24px;color:#4f8ef7">铱 Iridium</td>
-            <td style="text-align:right;font-weight:600">$7,800.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
-        </tr>
-        <tr>
-            <td style="padding-left:24px;color:#e8a838">钌 Ruthenium</td>
-            <td style="text-align:right;font-weight:600">$1,700.00</td>
-            <td style="text-align:right;color:#888">USD/troy oz</td>
-            <td style="text-align:right;color:#475569;font-size:11px">Umicore</td>
         </tr></tbody>
         </table>
       </div>
     </section>
 
-    <div class="generated">生成于 2026-05-23 · python3 generate_dashboard.py</div>
+    <div class="generated">生成于 2026-05-30 · python3 generate_dashboard.py</div>
 
   </main>
 </div>
 
 <script>
-const datasets = [{"label": "铱 · Umicore", "data": [{"x": "2025-05-23", "y": 4100.0}, {"x": "2025-05-27", "y": 4100.0}, {"x": "2025-05-28", "y": 4100.0}, {"x": "2025-05-29", "y": 4100.0}, {"x": "2025-05-30", "y": 4100.0}, {"x": "2025-06-02", "y": 4100.0}, {"x": "2025-06-03", "y": 4100.0}, {"x": "2025-06-04", "y": 4100.0}, {"x": "2025-06-05", "y": 4100.0}, {"x": "2025-06-06", "y": 4100.0}, {"x": "2025-06-09", "y": 4100.0}, {"x": "2025-06-10", "y": 4100.0}, {"x": "2025-06-11", "y": 4100.0}, {"x": "2025-06-12", "y": 4100.0}, {"x": "2025-06-13", "y": 4200.0}, {"x": "2025-06-16", "y": 4200.0}, {"x": "2025-06-17", "y": 4200.0}, {"x": "2025-06-18", "y": 4200.0}, {"x": "2025-06-19", "y": 4200.0}, {"x": "2025-06-20", "y": 4200.0}, {"x": "2025-06-23", "y": 4200.0}, {"x": "2025-06-24", "y": 4200.0}, {"x": "2025-06-25", "y": 4200.0}, {"x": "2025-06-26", "y": 4200.0}, {"x": "2025-06-27", "y": 4200.0}, {"x": "2025-06-30", "y": 4200.0}, {"x": "2025-07-01", "y": 4200.0}, {"x": "2025-07-02", "y": 4200.0}, {"x": "2025-07-03", "y": 4200.0}, {"x": "2025-07-07", "y": 4325.0}, {"x": "2025-07-08", "y": 4350.0}, {"x": "2025-07-09", "y": 4400.0}, {"x": "2025-07-10", "y": 4400.0}, {"x": "2025-07-11", "y": 4425.0}, {"x": "2025-07-14", "y": 4450.0}, {"x": "2025-07-15", "y": 4450.0}, {"x": "2025-07-16", "y": 4450.0}, {"x": "2025-07-17", "y": 4450.0}, {"x": "2025-07-18", "y": 4450.0}, {"x": "2025-07-21", "y": 4450.0}, {"x": "2025-07-22", "y": 4450.0}, {"x": "2025-07-23", "y": 4450.0}, {"x": "2025-07-24", "y": 4450.0}, {"x": "2025-07-25", "y": 4450.0}, {"x": "2025-07-28", "y": 4450.0}, {"x": "2025-07-29", "y": 4450.0}, {"x": "2025-07-30", "y": 4625.0}, {"x": "2025-07-31", "y": 4650.0}, {"x": "2025-08-01", "y": 4650.0}, {"x": "2025-08-04", "y": 4700.0}, {"x": "2025-08-05", "y": 4700.0}, {"x": "2025-08-06", "y": 4650.0}, {"x": "2025-08-07", "y": 4650.0}, {"x": "2025-08-08", "y": 4700.0}, {"x": "2025-08-11", "y": 4700.0}, {"x": "2025-08-12", "y": 4725.0}, {"x": "2025-08-13", "y": 4725.0}, {"x": "2025-08-14", "y": 4725.0}, {"x": "2025-08-15", "y": 4725.0}, {"x": "2025-08-18", "y": 4725.0}, {"x": "2025-08-19", "y": 4725.0}, {"x": "2025-08-20", "y": 4725.0}, {"x": "2025-08-21", "y": 4725.0}, {"x": "2025-08-22", "y": 4725.0}, {"x": "2025-08-25", "y": 4700.0}, {"x": "2025-08-26", "y": 4700.0}, {"x": "2025-08-27", "y": 4700.0}, {"x": "2025-08-28", "y": 4700.0}, {"x": "2025-08-29", "y": 4700.0}, {"x": "2025-09-02", "y": 4700.0}, {"x": "2025-09-03", "y": 4700.0}, {"x": "2025-09-04", "y": 4700.0}, {"x": "2025-09-05", "y": 4700.0}, {"x": "2025-09-08", "y": 4700.0}, {"x": "2025-09-09", "y": 4700.0}, {"x": "2025-09-10", "y": 4700.0}, {"x": "2025-09-11", "y": 4700.0}, {"x": "2025-09-12", "y": 4700.0}, {"x": "2025-09-15", "y": 4700.0}, {"x": "2025-09-16", "y": 4650.0}, {"x": "2025-09-17", "y": 4650.0}, {"x": "2025-09-18", "y": 4640.0}, {"x": "2025-09-19", "y": 4615.0}, {"x": "2025-09-22", "y": 4615.0}, {"x": "2025-09-23", "y": 4615.0}, {"x": "2025-09-24", "y": 4615.0}, {"x": "2025-09-25", "y": 4615.0}, {"x": "2025-09-26", "y": 4615.0}, {"x": "2025-09-29", "y": 4600.0}, {"x": "2025-09-30", "y": 4600.0}, {"x": "2025-10-01", "y": 4600.0}, {"x": "2025-10-02", "y": 4450.0}, {"x": "2025-10-03", "y": 4450.0}, {"x": "2025-10-06", "y": 4450.0}, {"x": "2025-10-07", "y": 4450.0}, {"x": "2025-10-08", "y": 4450.0}, {"x": "2025-10-09", "y": 4450.0}, {"x": "2025-10-10", "y": 4450.0}, {"x": "2025-10-13", "y": 4450.0}, {"x": "2025-10-14", "y": 4450.0}, {"x": "2025-10-15", "y": 4400.0}, {"x": "2025-10-16", "y": 4400.0}, {"x": "2025-10-17", "y": 4400.0}, {"x": "2025-10-20", "y": 4400.0}, {"x": "2025-10-21", "y": 4400.0}, {"x": "2025-10-22", "y": 4400.0}, {"x": "2025-10-23", "y": 4400.0}, {"x": "2025-10-24", "y": 4400.0}, {"x": "2025-10-27", "y": 4400.0}, {"x": "2025-10-28", "y": 4400.0}, {"x": "2025-10-29", "y": 4400.0}, {"x": "2025-10-30", "y": 4400.0}, {"x": "2025-10-31", "y": 4400.0}, {"x": "2025-11-03", "y": 4400.0}, {"x": "2025-11-04", "y": 4400.0}, {"x": "2025-11-05", "y": 4400.0}, {"x": "2025-11-06", "y": 4400.0}, {"x": "2025-11-07", "y": 4400.0}, {"x": "2025-11-10", "y": 4400.0}, {"x": "2025-11-11", "y": 4400.0}, {"x": "2025-11-12", "y": 4400.0}, {"x": "2025-11-13", "y": 4400.0}, {"x": "2025-11-14", "y": 4400.0}, {"x": "2025-11-17", "y": 4400.0}, {"x": "2025-11-18", "y": 4400.0}, {"x": "2025-11-19", "y": 4400.0}, {"x": "2025-11-20", "y": 4400.0}, {"x": "2025-11-21", "y": 4400.0}, {"x": "2025-11-24", "y": 4400.0}, {"x": "2025-11-25", "y": 4400.0}, {"x": "2025-11-26", "y": 4400.0}, {"x": "2025-12-01", "y": 4400.0}, {"x": "2025-12-02", "y": 4400.0}, {"x": "2025-12-03", "y": 4400.0}, {"x": "2025-12-04", "y": 4400.0}, {"x": "2025-12-05", "y": 4400.0}, {"x": "2025-12-08", "y": 4400.0}, {"x": "2025-12-09", "y": 4400.0}, {"x": "2025-12-10", "y": 4400.0}, {"x": "2025-12-11", "y": 4400.0}, {"x": "2025-12-12", "y": 4400.0}, {"x": "2025-12-15", "y": 4400.0}, {"x": "2025-12-16", "y": 4400.0}, {"x": "2025-12-17", "y": 4400.0}, {"x": "2025-12-18", "y": 4400.0}, {"x": "2025-12-19", "y": 4400.0}, {"x": "2025-12-22", "y": 4400.0}, {"x": "2025-12-23", "y": 4400.0}, {"x": "2025-12-24", "y": 4400.0}, {"x": "2025-12-26", "y": 4400.0}, {"x": "2025-12-29", "y": 4400.0}, {"x": "2025-12-30", "y": 4400.0}, {"x": "2025-12-31", "y": 4400.0}, {"x": "2026-01-02", "y": 4700.0}, {"x": "2026-01-05", "y": 4800.0}, {"x": "2026-01-06", "y": 4900.0}, {"x": "2026-01-07", "y": 4900.0}, {"x": "2026-01-08", "y": 5000.0}, {"x": "2026-01-09", "y": 5000.0}, {"x": "2026-01-12", "y": 5300.0}, {"x": "2026-01-13", "y": 5400.0}, {"x": "2026-01-14", "y": 5500.0}, {"x": "2026-01-15", "y": 5700.0}, {"x": "2026-01-16", "y": 5800.0}, {"x": "2026-01-19", "y": 5900.0}, {"x": "2026-01-20", "y": 6000.0}, {"x": "2026-01-21", "y": 6100.0}, {"x": "2026-01-22", "y": 6200.0}, {"x": "2026-01-23", "y": 6200.0}, {"x": "2026-01-26", "y": 6200.0}, {"x": "2026-01-27", "y": 6300.0}, {"x": "2026-01-28", "y": 6400.0}, {"x": "2026-01-29", "y": 6500.0}, {"x": "2026-01-30", "y": 6500.0}, {"x": "2026-02-02", "y": 6500.0}, {"x": "2026-02-03", "y": 6500.0}, {"x": "2026-02-04", "y": 6500.0}, {"x": "2026-02-05", "y": 6500.0}, {"x": "2026-02-06", "y": 6500.0}, {"x": "2026-02-09", "y": 6500.0}, {"x": "2026-02-10", "y": 6500.0}, {"x": "2026-02-11", "y": 6500.0}, {"x": "2026-02-12", "y": 6500.0}, {"x": "2026-02-13", "y": 6500.0}, {"x": "2026-02-16", "y": 6500.0}, {"x": "2026-02-17", "y": 6500.0}, {"x": "2026-02-18", "y": 6500.0}, {"x": "2026-02-19", "y": 6500.0}, {"x": "2026-02-20", "y": 6500.0}, {"x": "2026-02-23", "y": 6500.0}, {"x": "2026-02-24", "y": 6550.0}, {"x": "2026-02-25", "y": 6550.0}, {"x": "2026-02-26", "y": 6550.0}, {"x": "2026-02-27", "y": 6550.0}, {"x": "2026-03-02", "y": 6600.0}, {"x": "2026-03-03", "y": 6600.0}, {"x": "2026-03-04", "y": 6800.0}, {"x": "2026-03-05", "y": 7000.0}, {"x": "2026-03-06", "y": 7100.0}, {"x": "2026-03-09", "y": 7200.0}, {"x": "2026-03-10", "y": 7300.0}, {"x": "2026-03-11", "y": 7400.0}, {"x": "2026-03-12", "y": 8000.0}, {"x": "2026-03-13", "y": 8000.0}, {"x": "2026-03-16", "y": 7950.0}, {"x": "2026-03-17", "y": 7950.0}, {"x": "2026-03-18", "y": 7950.0}, {"x": "2026-03-19", "y": 7950.0}, {"x": "2026-03-20", "y": 8000.0}, {"x": "2026-03-23", "y": 8000.0}, {"x": "2026-03-24", "y": 8000.0}, {"x": "2026-03-25", "y": 8000.0}, {"x": "2026-03-26", "y": 8000.0}, {"x": "2026-03-27", "y": 8000.0}, {"x": "2026-03-30", "y": 8000.0}, {"x": "2026-03-31", "y": 8000.0}, {"x": "2026-04-01", "y": 8000.0}, {"x": "2026-04-02", "y": 8000.0}, {"x": "2026-04-06", "y": 8000.0}, {"x": "2026-04-07", "y": 7900.0}, {"x": "2026-04-08", "y": 7900.0}, {"x": "2026-04-09", "y": 7900.0}, {"x": "2026-04-10", "y": 7900.0}, {"x": "2026-04-13", "y": 7900.0}, {"x": "2026-04-14", "y": 7900.0}, {"x": "2026-04-15", "y": 7900.0}, {"x": "2026-04-16", "y": 7800.0}, {"x": "2026-04-17", "y": 7900.0}, {"x": "2026-04-20", "y": 7900.0}, {"x": "2026-04-21", "y": 7800.0}, {"x": "2026-04-22", "y": 7800.0}, {"x": "2026-04-23", "y": 7800.0}, {"x": "2026-04-24", "y": 7700.0}, {"x": "2026-04-27", "y": 7600.0}, {"x": "2026-04-28", "y": 7500.0}, {"x": "2026-04-29", "y": 7500.0}, {"x": "2026-04-30", "y": 7400.0}, {"x": "2026-05-01", "y": 7300.0}, {"x": "2026-05-04", "y": 7300.0}, {"x": "2026-05-05", "y": 7300.0}, {"x": "2026-05-06", "y": 7300.0}, {"x": "2026-05-07", "y": 7300.0}, {"x": "2026-05-08", "y": 7300.0}, {"x": "2026-05-11", "y": 7300.0}, {"x": "2026-05-12", "y": 7300.0}, {"x": "2026-05-13", "y": 7300.0}, {"x": "2026-05-14", "y": 7330.0}, {"x": "2026-05-15", "y": 7300.0}, {"x": "2026-05-18", "y": 7300.0}, {"x": "2026-05-19", "y": 7300.0}, {"x": "2026-05-20", "y": 7300.0}, {"x": "2026-05-21", "y": 7300.0}, {"x": "2026-05-22", "y": 7300.0}], "borderColor": "#4f8ef7", "backgroundColor": "#4f8ef722", "borderWidth": 2, "pointRadius": 0, "tension": 0.3, "fill": false, "yAxisID": "yIr"}, {"label": "钌 · Umicore", "data": [{"x": "2025-05-23", "y": 615.0}, {"x": "2025-05-27", "y": 615.0}, {"x": "2025-05-28", "y": 615.0}, {"x": "2025-05-29", "y": 615.0}, {"x": "2025-05-30", "y": 615.0}, {"x": "2025-06-02", "y": 615.0}, {"x": "2025-06-03", "y": 615.0}, {"x": "2025-06-04", "y": 615.0}, {"x": "2025-06-05", "y": 615.0}, {"x": "2025-06-06", "y": 615.0}, {"x": "2025-06-09", "y": 615.0}, {"x": "2025-06-10", "y": 615.0}, {"x": "2025-06-11", "y": 675.0}, {"x": "2025-06-12", "y": 675.0}, {"x": "2025-06-13", "y": 675.0}, {"x": "2025-06-16", "y": 675.0}, {"x": "2025-06-17", "y": 675.0}, {"x": "2025-06-18", "y": 675.0}, {"x": "2025-06-19", "y": 675.0}, {"x": "2025-06-20", "y": 675.0}, {"x": "2025-06-23", "y": 675.0}, {"x": "2025-06-24", "y": 675.0}, {"x": "2025-06-25", "y": 675.0}, {"x": "2025-06-26", "y": 675.0}, {"x": "2025-06-27", "y": 700.0}, {"x": "2025-06-30", "y": 710.0}, {"x": "2025-07-01", "y": 720.0}, {"x": "2025-07-02", "y": 775.0}, {"x": "2025-07-03", "y": 775.0}, {"x": "2025-07-07", "y": 800.0}, {"x": "2025-07-08", "y": 800.0}, {"x": "2025-07-09", "y": 810.0}, {"x": "2025-07-10", "y": 810.0}, {"x": "2025-07-11", "y": 810.0}, {"x": "2025-07-14", "y": 810.0}, {"x": "2025-07-15", "y": 810.0}, {"x": "2025-07-16", "y": 810.0}, {"x": "2025-07-17", "y": 800.0}, {"x": "2025-07-18", "y": 800.0}, {"x": "2025-07-21", "y": 800.0}, {"x": "2025-07-22", "y": 800.0}, {"x": "2025-07-23", "y": 810.0}, {"x": "2025-07-24", "y": 810.0}, {"x": "2025-07-25", "y": 820.0}, {"x": "2025-07-28", "y": 820.0}, {"x": "2025-07-29", "y": 820.0}, {"x": "2025-07-30", "y": 830.0}, {"x": "2025-07-31", "y": 830.0}, {"x": "2025-08-01", "y": 830.0}, {"x": "2025-08-04", "y": 830.0}, {"x": "2025-08-05", "y": 830.0}, {"x": "2025-08-06", "y": 830.0}, {"x": "2025-08-07", "y": 840.0}, {"x": "2025-08-08", "y": 840.0}, {"x": "2025-08-11", "y": 840.0}, {"x": "2025-08-12", "y": 850.0}, {"x": "2025-08-13", "y": 850.0}, {"x": "2025-08-14", "y": 850.0}, {"x": "2025-08-15", "y": 850.0}, {"x": "2025-08-18", "y": 880.0}, {"x": "2025-08-19", "y": 880.0}, {"x": "2025-08-20", "y": 920.0}, {"x": "2025-08-21", "y": 935.0}, {"x": "2025-08-22", "y": 935.0}, {"x": "2025-08-25", "y": 930.0}, {"x": "2025-08-26", "y": 930.0}, {"x": "2025-08-27", "y": 930.0}, {"x": "2025-08-28", "y": 930.0}, {"x": "2025-08-29", "y": 930.0}, {"x": "2025-09-02", "y": 935.0}, {"x": "2025-09-03", "y": 935.0}, {"x": "2025-09-04", "y": 935.0}, {"x": "2025-09-05", "y": 935.0}, {"x": "2025-09-08", "y": 935.0}, {"x": "2025-09-09", "y": 935.0}, {"x": "2025-09-10", "y": 935.0}, {"x": "2025-09-11", "y": 930.0}, {"x": "2025-09-12", "y": 930.0}, {"x": "2025-09-15", "y": 935.0}, {"x": "2025-09-16", "y": 920.0}, {"x": "2025-09-17", "y": 920.0}, {"x": "2025-09-18", "y": 925.0}, {"x": "2025-09-19", "y": 925.0}, {"x": "2025-09-22", "y": 925.0}, {"x": "2025-09-23", "y": 925.0}, {"x": "2025-09-24", "y": 925.0}, {"x": "2025-09-25", "y": 925.0}, {"x": "2025-09-26", "y": 925.0}, {"x": "2025-09-29", "y": 925.0}, {"x": "2025-09-30", "y": 925.0}, {"x": "2025-10-01", "y": 925.0}, {"x": "2025-10-02", "y": 925.0}, {"x": "2025-10-03", "y": 925.0}, {"x": "2025-10-06", "y": 925.0}, {"x": "2025-10-07", "y": 925.0}, {"x": "2025-10-08", "y": 925.0}, {"x": "2025-10-09", "y": 925.0}, {"x": "2025-10-10", "y": 925.0}, {"x": "2025-10-13", "y": 925.0}, {"x": "2025-10-14", "y": 925.0}, {"x": "2025-10-15", "y": 925.0}, {"x": "2025-10-16", "y": 925.0}, {"x": "2025-10-17", "y": 925.0}, {"x": "2025-10-20", "y": 925.0}, {"x": "2025-10-21", "y": 925.0}, {"x": "2025-10-22", "y": 925.0}, {"x": "2025-10-23", "y": 925.0}, {"x": "2025-10-24", "y": 925.0}, {"x": "2025-10-27", "y": 925.0}, {"x": "2025-10-28", "y": 925.0}, {"x": "2025-10-29", "y": 925.0}, {"x": "2025-10-30", "y": 925.0}, {"x": "2025-10-31", "y": 925.0}, {"x": "2025-11-03", "y": 925.0}, {"x": "2025-11-04", "y": 925.0}, {"x": "2025-11-05", "y": 925.0}, {"x": "2025-11-06", "y": 925.0}, {"x": "2025-11-07", "y": 925.0}, {"x": "2025-11-10", "y": 925.0}, {"x": "2025-11-11", "y": 925.0}, {"x": "2025-11-12", "y": 925.0}, {"x": "2025-11-13", "y": 925.0}, {"x": "2025-11-14", "y": 925.0}, {"x": "2025-11-17", "y": 925.0}, {"x": "2025-11-18", "y": 925.0}, {"x": "2025-11-19", "y": 925.0}, {"x": "2025-11-20", "y": 925.0}, {"x": "2025-11-21", "y": 925.0}, {"x": "2025-11-24", "y": 925.0}, {"x": "2025-11-25", "y": 925.0}, {"x": "2025-11-26", "y": 925.0}, {"x": "2025-12-01", "y": 925.0}, {"x": "2025-12-02", "y": 925.0}, {"x": "2025-12-03", "y": 925.0}, {"x": "2025-12-04", "y": 925.0}, {"x": "2025-12-05", "y": 925.0}, {"x": "2025-12-08", "y": 925.0}, {"x": "2025-12-09", "y": 925.0}, {"x": "2025-12-10", "y": 925.0}, {"x": "2025-12-11", "y": 925.0}, {"x": "2025-12-12", "y": 925.0}, {"x": "2025-12-15", "y": 925.0}, {"x": "2025-12-16", "y": 925.0}, {"x": "2025-12-17", "y": 925.0}, {"x": "2025-12-18", "y": 925.0}, {"x": "2025-12-19", "y": 925.0}, {"x": "2025-12-22", "y": 925.0}, {"x": "2025-12-23", "y": 925.0}, {"x": "2025-12-24", "y": 925.0}, {"x": "2025-12-26", "y": 925.0}, {"x": "2025-12-29", "y": 950.0}, {"x": "2025-12-30", "y": 1000.0}, {"x": "2025-12-31", "y": 1050.0}, {"x": "2026-01-02", "y": 1250.0}, {"x": "2026-01-05", "y": 1300.0}, {"x": "2026-01-06", "y": 1325.0}, {"x": "2026-01-07", "y": 1350.0}, {"x": "2026-01-08", "y": 1375.0}, {"x": "2026-01-09", "y": 1375.0}, {"x": "2026-01-12", "y": 1375.0}, {"x": "2026-01-13", "y": 1375.0}, {"x": "2026-01-14", "y": 1390.0}, {"x": "2026-01-15", "y": 1395.0}, {"x": "2026-01-16", "y": 1400.0}, {"x": "2026-01-19", "y": 1400.0}, {"x": "2026-01-20", "y": 1400.0}, {"x": "2026-01-21", "y": 1400.0}, {"x": "2026-01-22", "y": 1400.0}, {"x": "2026-01-23", "y": 1400.0}, {"x": "2026-01-26", "y": 1400.0}, {"x": "2026-01-27", "y": 1425.0}, {"x": "2026-01-28", "y": 1425.0}, {"x": "2026-01-29", "y": 1400.0}, {"x": "2026-01-30", "y": 1400.0}, {"x": "2026-02-02", "y": 1400.0}, {"x": "2026-02-03", "y": 1400.0}, {"x": "2026-02-04", "y": 1400.0}, {"x": "2026-02-05", "y": 1400.0}, {"x": "2026-02-06", "y": 1400.0}, {"x": "2026-02-09", "y": 1400.0}, {"x": "2026-02-10", "y": 1400.0}, {"x": "2026-02-11", "y": 1400.0}, {"x": "2026-02-12", "y": 1400.0}, {"x": "2026-02-13", "y": 1400.0}, {"x": "2026-02-16", "y": 1400.0}, {"x": "2026-02-17", "y": 1400.0}, {"x": "2026-02-18", "y": 1400.0}, {"x": "2026-02-19", "y": 1400.0}, {"x": "2026-02-20", "y": 1400.0}, {"x": "2026-02-23", "y": 1400.0}, {"x": "2026-02-24", "y": 1400.0}, {"x": "2026-02-25", "y": 1400.0}, {"x": "2026-02-26", "y": 1400.0}, {"x": "2026-02-27", "y": 1400.0}, {"x": "2026-03-02", "y": 1400.0}, {"x": "2026-03-03", "y": 1400.0}, {"x": "2026-03-04", "y": 1450.0}, {"x": "2026-03-05", "y": 1470.0}, {"x": "2026-03-06", "y": 1500.0}, {"x": "2026-03-09", "y": 1570.0}, {"x": "2026-03-10", "y": 1570.0}, {"x": "2026-03-11", "y": 1700.0}, {"x": "2026-03-12", "y": 1750.0}, {"x": "2026-03-13", "y": 1750.0}, {"x": "2026-03-16", "y": 1750.0}, {"x": "2026-03-17", "y": 1750.0}, {"x": "2026-03-18", "y": 1750.0}, {"x": "2026-03-19", "y": 1750.0}, {"x": "2026-03-20", "y": 1750.0}, {"x": "2026-03-23", "y": 1750.0}, {"x": "2026-03-24", "y": 1750.0}, {"x": "2026-03-25", "y": 1750.0}, {"x": "2026-03-26", "y": 1750.0}, {"x": "2026-03-27", "y": 1750.0}, {"x": "2026-03-30", "y": 1750.0}, {"x": "2026-03-31", "y": 1750.0}, {"x": "2026-04-01", "y": 1750.0}, {"x": "2026-04-02", "y": 1750.0}, {"x": "2026-04-06", "y": 1750.0}, {"x": "2026-04-07", "y": 1750.0}, {"x": "2026-04-08", "y": 1750.0}, {"x": "2026-04-09", "y": 1750.0}, {"x": "2026-04-10", "y": 1750.0}, {"x": "2026-04-13", "y": 1750.0}, {"x": "2026-04-14", "y": 1750.0}, {"x": "2026-04-15", "y": 1750.0}, {"x": "2026-04-16", "y": 1750.0}, {"x": "2026-04-17", "y": 1750.0}, {"x": "2026-04-20", "y": 1700.0}, {"x": "2026-04-21", "y": 1700.0}, {"x": "2026-04-22", "y": 1700.0}, {"x": "2026-04-23", "y": 1700.0}, {"x": "2026-04-24", "y": 1700.0}, {"x": "2026-04-27", "y": 1700.0}, {"x": "2026-04-28", "y": 1700.0}, {"x": "2026-04-29", "y": 1700.0}, {"x": "2026-04-30", "y": 1700.0}, {"x": "2026-05-01", "y": 1700.0}, {"x": "2026-05-04", "y": 1700.0}, {"x": "2026-05-05", "y": 1650.0}, {"x": "2026-05-06", "y": 1600.0}, {"x": "2026-05-07", "y": 1550.0}, {"x": "2026-05-08", "y": 1550.0}, {"x": "2026-05-11", "y": 1550.0}, {"x": "2026-05-12", "y": 1550.0}, {"x": "2026-05-13", "y": 1550.0}, {"x": "2026-05-14", "y": 1550.0}, {"x": "2026-05-15", "y": 1550.0}, {"x": "2026-05-18", "y": 1550.0}, {"x": "2026-05-19", "y": 1550.0}, {"x": "2026-05-20", "y": 1550.0}, {"x": "2026-05-21", "y": 1550.0}, {"x": "2026-05-22", "y": 1550.0}], "borderColor": "#e8a838", "backgroundColor": "#e8a83822", "borderWidth": 2, "pointRadius": 0, "tension": 0.3, "fill": false, "yAxisID": "yRu"}];
+const datasets = [{"label": "铱 · Umicore", "data": [{"x": "2025-05-23", "y": 4100.0}, {"x": "2025-05-27", "y": 4100.0}, {"x": "2025-05-28", "y": 4100.0}, {"x": "2025-05-29", "y": 4100.0}, {"x": "2025-05-30", "y": 4100.0}, {"x": "2025-06-02", "y": 4100.0}, {"x": "2025-06-03", "y": 4100.0}, {"x": "2025-06-04", "y": 4100.0}, {"x": "2025-06-05", "y": 4100.0}, {"x": "2025-06-06", "y": 4100.0}, {"x": "2025-06-09", "y": 4100.0}, {"x": "2025-06-10", "y": 4100.0}, {"x": "2025-06-11", "y": 4100.0}, {"x": "2025-06-12", "y": 4100.0}, {"x": "2025-06-13", "y": 4200.0}, {"x": "2025-06-16", "y": 4200.0}, {"x": "2025-06-17", "y": 4200.0}, {"x": "2025-06-18", "y": 4200.0}, {"x": "2025-06-19", "y": 4200.0}, {"x": "2025-06-20", "y": 4200.0}, {"x": "2025-06-23", "y": 4200.0}, {"x": "2025-06-24", "y": 4200.0}, {"x": "2025-06-25", "y": 4200.0}, {"x": "2025-06-26", "y": 4200.0}, {"x": "2025-06-27", "y": 4200.0}, {"x": "2025-06-30", "y": 4200.0}, {"x": "2025-07-01", "y": 4200.0}, {"x": "2025-07-02", "y": 4200.0}, {"x": "2025-07-03", "y": 4200.0}, {"x": "2025-07-07", "y": 4325.0}, {"x": "2025-07-08", "y": 4350.0}, {"x": "2025-07-09", "y": 4400.0}, {"x": "2025-07-10", "y": 4400.0}, {"x": "2025-07-11", "y": 4425.0}, {"x": "2025-07-14", "y": 4450.0}, {"x": "2025-07-15", "y": 4450.0}, {"x": "2025-07-16", "y": 4450.0}, {"x": "2025-07-17", "y": 4450.0}, {"x": "2025-07-18", "y": 4450.0}, {"x": "2025-07-21", "y": 4450.0}, {"x": "2025-07-22", "y": 4450.0}, {"x": "2025-07-23", "y": 4450.0}, {"x": "2025-07-24", "y": 4450.0}, {"x": "2025-07-25", "y": 4450.0}, {"x": "2025-07-28", "y": 4450.0}, {"x": "2025-07-29", "y": 4450.0}, {"x": "2025-07-30", "y": 4625.0}, {"x": "2025-07-31", "y": 4650.0}, {"x": "2025-08-01", "y": 4650.0}, {"x": "2025-08-04", "y": 4700.0}, {"x": "2025-08-05", "y": 4700.0}, {"x": "2025-08-06", "y": 4650.0}, {"x": "2025-08-07", "y": 4650.0}, {"x": "2025-08-08", "y": 4700.0}, {"x": "2025-08-11", "y": 4700.0}, {"x": "2025-08-12", "y": 4725.0}, {"x": "2025-08-13", "y": 4725.0}, {"x": "2025-08-14", "y": 4725.0}, {"x": "2025-08-15", "y": 4725.0}, {"x": "2025-08-18", "y": 4725.0}, {"x": "2025-08-19", "y": 4725.0}, {"x": "2025-08-20", "y": 4725.0}, {"x": "2025-08-21", "y": 4725.0}, {"x": "2025-08-22", "y": 4725.0}, {"x": "2025-08-25", "y": 4700.0}, {"x": "2025-08-26", "y": 4700.0}, {"x": "2025-08-27", "y": 4700.0}, {"x": "2025-08-28", "y": 4700.0}, {"x": "2025-08-29", "y": 4700.0}, {"x": "2025-09-02", "y": 4700.0}, {"x": "2025-09-03", "y": 4700.0}, {"x": "2025-09-04", "y": 4700.0}, {"x": "2025-09-05", "y": 4700.0}, {"x": "2025-09-08", "y": 4700.0}, {"x": "2025-09-09", "y": 4700.0}, {"x": "2025-09-10", "y": 4700.0}, {"x": "2025-09-11", "y": 4700.0}, {"x": "2025-09-12", "y": 4700.0}, {"x": "2025-09-15", "y": 4700.0}, {"x": "2025-09-16", "y": 4650.0}, {"x": "2025-09-17", "y": 4650.0}, {"x": "2025-09-18", "y": 4640.0}, {"x": "2025-09-19", "y": 4615.0}, {"x": "2025-09-22", "y": 4615.0}, {"x": "2025-09-23", "y": 4615.0}, {"x": "2025-09-24", "y": 4615.0}, {"x": "2025-09-25", "y": 4615.0}, {"x": "2025-09-26", "y": 4615.0}, {"x": "2025-09-29", "y": 4600.0}, {"x": "2025-09-30", "y": 4600.0}, {"x": "2025-10-01", "y": 4600.0}, {"x": "2025-10-02", "y": 4450.0}, {"x": "2025-10-03", "y": 4450.0}, {"x": "2025-10-06", "y": 4450.0}, {"x": "2025-10-07", "y": 4450.0}, {"x": "2025-10-08", "y": 4450.0}, {"x": "2025-10-09", "y": 4450.0}, {"x": "2025-10-10", "y": 4450.0}, {"x": "2025-10-13", "y": 4450.0}, {"x": "2025-10-14", "y": 4450.0}, {"x": "2025-10-15", "y": 4400.0}, {"x": "2025-10-16", "y": 4400.0}, {"x": "2025-10-17", "y": 4400.0}, {"x": "2025-10-20", "y": 4400.0}, {"x": "2025-10-21", "y": 4400.0}, {"x": "2025-10-22", "y": 4400.0}, {"x": "2025-10-23", "y": 4400.0}, {"x": "2025-10-24", "y": 4400.0}, {"x": "2025-10-27", "y": 4400.0}, {"x": "2025-10-28", "y": 4400.0}, {"x": "2025-10-29", "y": 4400.0}, {"x": "2025-10-30", "y": 4400.0}, {"x": "2025-10-31", "y": 4400.0}, {"x": "2025-11-03", "y": 4400.0}, {"x": "2025-11-04", "y": 4400.0}, {"x": "2025-11-05", "y": 4400.0}, {"x": "2025-11-06", "y": 4400.0}, {"x": "2025-11-07", "y": 4400.0}, {"x": "2025-11-10", "y": 4400.0}, {"x": "2025-11-11", "y": 4400.0}, {"x": "2025-11-12", "y": 4400.0}, {"x": "2025-11-13", "y": 4400.0}, {"x": "2025-11-14", "y": 4400.0}, {"x": "2025-11-17", "y": 4400.0}, {"x": "2025-11-18", "y": 4400.0}, {"x": "2025-11-19", "y": 4400.0}, {"x": "2025-11-20", "y": 4400.0}, {"x": "2025-11-21", "y": 4400.0}, {"x": "2025-11-24", "y": 4400.0}, {"x": "2025-11-25", "y": 4400.0}, {"x": "2025-11-26", "y": 4400.0}, {"x": "2025-12-01", "y": 4400.0}, {"x": "2025-12-02", "y": 4400.0}, {"x": "2025-12-03", "y": 4400.0}, {"x": "2025-12-04", "y": 4400.0}, {"x": "2025-12-05", "y": 4400.0}, {"x": "2025-12-08", "y": 4400.0}, {"x": "2025-12-09", "y": 4400.0}, {"x": "2025-12-10", "y": 4400.0}, {"x": "2025-12-11", "y": 4400.0}, {"x": "2025-12-12", "y": 4400.0}, {"x": "2025-12-15", "y": 4400.0}, {"x": "2025-12-16", "y": 4400.0}, {"x": "2025-12-17", "y": 4400.0}, {"x": "2025-12-18", "y": 4400.0}, {"x": "2025-12-19", "y": 4400.0}, {"x": "2025-12-22", "y": 4400.0}, {"x": "2025-12-23", "y": 4400.0}, {"x": "2025-12-24", "y": 4400.0}, {"x": "2025-12-26", "y": 4400.0}, {"x": "2025-12-29", "y": 4400.0}, {"x": "2025-12-30", "y": 4400.0}, {"x": "2025-12-31", "y": 4400.0}, {"x": "2026-01-02", "y": 4700.0}, {"x": "2026-01-05", "y": 4800.0}, {"x": "2026-01-06", "y": 4900.0}, {"x": "2026-01-07", "y": 4900.0}, {"x": "2026-01-08", "y": 5000.0}, {"x": "2026-01-09", "y": 5000.0}, {"x": "2026-01-12", "y": 5300.0}, {"x": "2026-01-13", "y": 5400.0}, {"x": "2026-01-14", "y": 5500.0}, {"x": "2026-01-15", "y": 5700.0}, {"x": "2026-01-16", "y": 5800.0}, {"x": "2026-01-19", "y": 5900.0}, {"x": "2026-01-20", "y": 6000.0}, {"x": "2026-01-21", "y": 6100.0}, {"x": "2026-01-22", "y": 6200.0}, {"x": "2026-01-23", "y": 6200.0}, {"x": "2026-01-26", "y": 6200.0}, {"x": "2026-01-27", "y": 6300.0}, {"x": "2026-01-28", "y": 6400.0}, {"x": "2026-01-29", "y": 6500.0}, {"x": "2026-01-30", "y": 6500.0}, {"x": "2026-02-02", "y": 6500.0}, {"x": "2026-02-03", "y": 6500.0}, {"x": "2026-02-04", "y": 6500.0}, {"x": "2026-02-05", "y": 6500.0}, {"x": "2026-02-06", "y": 6500.0}, {"x": "2026-02-09", "y": 6500.0}, {"x": "2026-02-10", "y": 6500.0}, {"x": "2026-02-11", "y": 6500.0}, {"x": "2026-02-12", "y": 6500.0}, {"x": "2026-02-13", "y": 6500.0}, {"x": "2026-02-16", "y": 6500.0}, {"x": "2026-02-17", "y": 6500.0}, {"x": "2026-02-18", "y": 6500.0}, {"x": "2026-02-19", "y": 6500.0}, {"x": "2026-02-20", "y": 6500.0}, {"x": "2026-02-23", "y": 6500.0}, {"x": "2026-02-24", "y": 6550.0}, {"x": "2026-02-25", "y": 6550.0}, {"x": "2026-02-26", "y": 6550.0}, {"x": "2026-02-27", "y": 6550.0}, {"x": "2026-03-02", "y": 6600.0}, {"x": "2026-03-03", "y": 6600.0}, {"x": "2026-03-04", "y": 6800.0}, {"x": "2026-03-05", "y": 7000.0}, {"x": "2026-03-06", "y": 7100.0}, {"x": "2026-03-09", "y": 7200.0}, {"x": "2026-03-10", "y": 7300.0}, {"x": "2026-03-11", "y": 7400.0}, {"x": "2026-03-12", "y": 8000.0}, {"x": "2026-03-13", "y": 8000.0}, {"x": "2026-03-16", "y": 7950.0}, {"x": "2026-03-17", "y": 7950.0}, {"x": "2026-03-18", "y": 7950.0}, {"x": "2026-03-19", "y": 7950.0}, {"x": "2026-03-20", "y": 8000.0}, {"x": "2026-03-23", "y": 8000.0}, {"x": "2026-03-24", "y": 8000.0}, {"x": "2026-03-25", "y": 8000.0}, {"x": "2026-03-26", "y": 8000.0}, {"x": "2026-03-27", "y": 8000.0}, {"x": "2026-03-30", "y": 8000.0}, {"x": "2026-03-31", "y": 8000.0}, {"x": "2026-04-01", "y": 8000.0}, {"x": "2026-04-02", "y": 8000.0}, {"x": "2026-04-06", "y": 8000.0}, {"x": "2026-04-07", "y": 7900.0}, {"x": "2026-04-08", "y": 7900.0}, {"x": "2026-04-09", "y": 7900.0}, {"x": "2026-04-10", "y": 7900.0}, {"x": "2026-04-13", "y": 7900.0}, {"x": "2026-04-14", "y": 7900.0}, {"x": "2026-04-15", "y": 7900.0}, {"x": "2026-04-16", "y": 7800.0}, {"x": "2026-04-17", "y": 7900.0}, {"x": "2026-04-20", "y": 7900.0}, {"x": "2026-04-21", "y": 7800.0}, {"x": "2026-04-22", "y": 7800.0}, {"x": "2026-04-23", "y": 7800.0}, {"x": "2026-04-24", "y": 7700.0}, {"x": "2026-04-27", "y": 7600.0}, {"x": "2026-04-28", "y": 7500.0}, {"x": "2026-04-29", "y": 7500.0}, {"x": "2026-04-30", "y": 7400.0}, {"x": "2026-05-01", "y": 7300.0}, {"x": "2026-05-04", "y": 7300.0}, {"x": "2026-05-05", "y": 7300.0}, {"x": "2026-05-06", "y": 7300.0}, {"x": "2026-05-07", "y": 7300.0}, {"x": "2026-05-08", "y": 7300.0}, {"x": "2026-05-11", "y": 7300.0}, {"x": "2026-05-12", "y": 7300.0}, {"x": "2026-05-13", "y": 7300.0}, {"x": "2026-05-14", "y": 7330.0}, {"x": "2026-05-15", "y": 7300.0}, {"x": "2026-05-18", "y": 7300.0}, {"x": "2026-05-19", "y": 7300.0}, {"x": "2026-05-20", "y": 7300.0}, {"x": "2026-05-21", "y": 7300.0}, {"x": "2026-05-22", "y": 7300.0}, {"x": "2026-05-26", "y": 7300.0}, {"x": "2026-05-27", "y": 7250.0}, {"x": "2026-05-28", "y": 7200.0}, {"x": "2026-05-29", "y": 7100.0}], "borderColor": "#4f8ef7", "backgroundColor": "#4f8ef722", "borderWidth": 2, "pointRadius": 0, "tension": 0.3, "fill": false, "yAxisID": "yIr"}, {"label": "钌 · Umicore", "data": [{"x": "2025-05-23", "y": 615.0}, {"x": "2025-05-27", "y": 615.0}, {"x": "2025-05-28", "y": 615.0}, {"x": "2025-05-29", "y": 615.0}, {"x": "2025-05-30", "y": 615.0}, {"x": "2025-06-02", "y": 615.0}, {"x": "2025-06-03", "y": 615.0}, {"x": "2025-06-04", "y": 615.0}, {"x": "2025-06-05", "y": 615.0}, {"x": "2025-06-06", "y": 615.0}, {"x": "2025-06-09", "y": 615.0}, {"x": "2025-06-10", "y": 615.0}, {"x": "2025-06-11", "y": 675.0}, {"x": "2025-06-12", "y": 675.0}, {"x": "2025-06-13", "y": 675.0}, {"x": "2025-06-16", "y": 675.0}, {"x": "2025-06-17", "y": 675.0}, {"x": "2025-06-18", "y": 675.0}, {"x": "2025-06-19", "y": 675.0}, {"x": "2025-06-20", "y": 675.0}, {"x": "2025-06-23", "y": 675.0}, {"x": "2025-06-24", "y": 675.0}, {"x": "2025-06-25", "y": 675.0}, {"x": "2025-06-26", "y": 675.0}, {"x": "2025-06-27", "y": 700.0}, {"x": "2025-06-30", "y": 710.0}, {"x": "2025-07-01", "y": 720.0}, {"x": "2025-07-02", "y": 775.0}, {"x": "2025-07-03", "y": 775.0}, {"x": "2025-07-07", "y": 800.0}, {"x": "2025-07-08", "y": 800.0}, {"x": "2025-07-09", "y": 810.0}, {"x": "2025-07-10", "y": 810.0}, {"x": "2025-07-11", "y": 810.0}, {"x": "2025-07-14", "y": 810.0}, {"x": "2025-07-15", "y": 810.0}, {"x": "2025-07-16", "y": 810.0}, {"x": "2025-07-17", "y": 800.0}, {"x": "2025-07-18", "y": 800.0}, {"x": "2025-07-21", "y": 800.0}, {"x": "2025-07-22", "y": 800.0}, {"x": "2025-07-23", "y": 810.0}, {"x": "2025-07-24", "y": 810.0}, {"x": "2025-07-25", "y": 820.0}, {"x": "2025-07-28", "y": 820.0}, {"x": "2025-07-29", "y": 820.0}, {"x": "2025-07-30", "y": 830.0}, {"x": "2025-07-31", "y": 830.0}, {"x": "2025-08-01", "y": 830.0}, {"x": "2025-08-04", "y": 830.0}, {"x": "2025-08-05", "y": 830.0}, {"x": "2025-08-06", "y": 830.0}, {"x": "2025-08-07", "y": 840.0}, {"x": "2025-08-08", "y": 840.0}, {"x": "2025-08-11", "y": 840.0}, {"x": "2025-08-12", "y": 850.0}, {"x": "2025-08-13", "y": 850.0}, {"x": "2025-08-14", "y": 850.0}, {"x": "2025-08-15", "y": 850.0}, {"x": "2025-08-18", "y": 880.0}, {"x": "2025-08-19", "y": 880.0}, {"x": "2025-08-20", "y": 920.0}, {"x": "2025-08-21", "y": 935.0}, {"x": "2025-08-22", "y": 935.0}, {"x": "2025-08-25", "y": 930.0}, {"x": "2025-08-26", "y": 930.0}, {"x": "2025-08-27", "y": 930.0}, {"x": "2025-08-28", "y": 930.0}, {"x": "2025-08-29", "y": 930.0}, {"x": "2025-09-02", "y": 935.0}, {"x": "2025-09-03", "y": 935.0}, {"x": "2025-09-04", "y": 935.0}, {"x": "2025-09-05", "y": 935.0}, {"x": "2025-09-08", "y": 935.0}, {"x": "2025-09-09", "y": 935.0}, {"x": "2025-09-10", "y": 935.0}, {"x": "2025-09-11", "y": 930.0}, {"x": "2025-09-12", "y": 930.0}, {"x": "2025-09-15", "y": 935.0}, {"x": "2025-09-16", "y": 920.0}, {"x": "2025-09-17", "y": 920.0}, {"x": "2025-09-18", "y": 925.0}, {"x": "2025-09-19", "y": 925.0}, {"x": "2025-09-22", "y": 925.0}, {"x": "2025-09-23", "y": 925.0}, {"x": "2025-09-24", "y": 925.0}, {"x": "2025-09-25", "y": 925.0}, {"x": "2025-09-26", "y": 925.0}, {"x": "2025-09-29", "y": 925.0}, {"x": "2025-09-30", "y": 925.0}, {"x": "2025-10-01", "y": 925.0}, {"x": "2025-10-02", "y": 925.0}, {"x": "2025-10-03", "y": 925.0}, {"x": "2025-10-06", "y": 925.0}, {"x": "2025-10-07", "y": 925.0}, {"x": "2025-10-08", "y": 925.0}, {"x": "2025-10-09", "y": 925.0}, {"x": "2025-10-10", "y": 925.0}, {"x": "2025-10-13", "y": 925.0}, {"x": "2025-10-14", "y": 925.0}, {"x": "2025-10-15", "y": 925.0}, {"x": "2025-10-16", "y": 925.0}, {"x": "2025-10-17", "y": 925.0}, {"x": "2025-10-20", "y": 925.0}, {"x": "2025-10-21", "y": 925.0}, {"x": "2025-10-22", "y": 925.0}, {"x": "2025-10-23", "y": 925.0}, {"x": "2025-10-24", "y": 925.0}, {"x": "2025-10-27", "y": 925.0}, {"x": "2025-10-28", "y": 925.0}, {"x": "2025-10-29", "y": 925.0}, {"x": "2025-10-30", "y": 925.0}, {"x": "2025-10-31", "y": 925.0}, {"x": "2025-11-03", "y": 925.0}, {"x": "2025-11-04", "y": 925.0}, {"x": "2025-11-05", "y": 925.0}, {"x": "2025-11-06", "y": 925.0}, {"x": "2025-11-07", "y": 925.0}, {"x": "2025-11-10", "y": 925.0}, {"x": "2025-11-11", "y": 925.0}, {"x": "2025-11-12", "y": 925.0}, {"x": "2025-11-13", "y": 925.0}, {"x": "2025-11-14", "y": 925.0}, {"x": "2025-11-17", "y": 925.0}, {"x": "2025-11-18", "y": 925.0}, {"x": "2025-11-19", "y": 925.0}, {"x": "2025-11-20", "y": 925.0}, {"x": "2025-11-21", "y": 925.0}, {"x": "2025-11-24", "y": 925.0}, {"x": "2025-11-25", "y": 925.0}, {"x": "2025-11-26", "y": 925.0}, {"x": "2025-12-01", "y": 925.0}, {"x": "2025-12-02", "y": 925.0}, {"x": "2025-12-03", "y": 925.0}, {"x": "2025-12-04", "y": 925.0}, {"x": "2025-12-05", "y": 925.0}, {"x": "2025-12-08", "y": 925.0}, {"x": "2025-12-09", "y": 925.0}, {"x": "2025-12-10", "y": 925.0}, {"x": "2025-12-11", "y": 925.0}, {"x": "2025-12-12", "y": 925.0}, {"x": "2025-12-15", "y": 925.0}, {"x": "2025-12-16", "y": 925.0}, {"x": "2025-12-17", "y": 925.0}, {"x": "2025-12-18", "y": 925.0}, {"x": "2025-12-19", "y": 925.0}, {"x": "2025-12-22", "y": 925.0}, {"x": "2025-12-23", "y": 925.0}, {"x": "2025-12-24", "y": 925.0}, {"x": "2025-12-26", "y": 925.0}, {"x": "2025-12-29", "y": 950.0}, {"x": "2025-12-30", "y": 1000.0}, {"x": "2025-12-31", "y": 1050.0}, {"x": "2026-01-02", "y": 1250.0}, {"x": "2026-01-05", "y": 1300.0}, {"x": "2026-01-06", "y": 1325.0}, {"x": "2026-01-07", "y": 1350.0}, {"x": "2026-01-08", "y": 1375.0}, {"x": "2026-01-09", "y": 1375.0}, {"x": "2026-01-12", "y": 1375.0}, {"x": "2026-01-13", "y": 1375.0}, {"x": "2026-01-14", "y": 1390.0}, {"x": "2026-01-15", "y": 1395.0}, {"x": "2026-01-16", "y": 1400.0}, {"x": "2026-01-19", "y": 1400.0}, {"x": "2026-01-20", "y": 1400.0}, {"x": "2026-01-21", "y": 1400.0}, {"x": "2026-01-22", "y": 1400.0}, {"x": "2026-01-23", "y": 1400.0}, {"x": "2026-01-26", "y": 1400.0}, {"x": "2026-01-27", "y": 1425.0}, {"x": "2026-01-28", "y": 1425.0}, {"x": "2026-01-29", "y": 1400.0}, {"x": "2026-01-30", "y": 1400.0}, {"x": "2026-02-02", "y": 1400.0}, {"x": "2026-02-03", "y": 1400.0}, {"x": "2026-02-04", "y": 1400.0}, {"x": "2026-02-05", "y": 1400.0}, {"x": "2026-02-06", "y": 1400.0}, {"x": "2026-02-09", "y": 1400.0}, {"x": "2026-02-10", "y": 1400.0}, {"x": "2026-02-11", "y": 1400.0}, {"x": "2026-02-12", "y": 1400.0}, {"x": "2026-02-13", "y": 1400.0}, {"x": "2026-02-16", "y": 1400.0}, {"x": "2026-02-17", "y": 1400.0}, {"x": "2026-02-18", "y": 1400.0}, {"x": "2026-02-19", "y": 1400.0}, {"x": "2026-02-20", "y": 1400.0}, {"x": "2026-02-23", "y": 1400.0}, {"x": "2026-02-24", "y": 1400.0}, {"x": "2026-02-25", "y": 1400.0}, {"x": "2026-02-26", "y": 1400.0}, {"x": "2026-02-27", "y": 1400.0}, {"x": "2026-03-02", "y": 1400.0}, {"x": "2026-03-03", "y": 1400.0}, {"x": "2026-03-04", "y": 1450.0}, {"x": "2026-03-05", "y": 1470.0}, {"x": "2026-03-06", "y": 1500.0}, {"x": "2026-03-09", "y": 1570.0}, {"x": "2026-03-10", "y": 1570.0}, {"x": "2026-03-11", "y": 1700.0}, {"x": "2026-03-12", "y": 1750.0}, {"x": "2026-03-13", "y": 1750.0}, {"x": "2026-03-16", "y": 1750.0}, {"x": "2026-03-17", "y": 1750.0}, {"x": "2026-03-18", "y": 1750.0}, {"x": "2026-03-19", "y": 1750.0}, {"x": "2026-03-20", "y": 1750.0}, {"x": "2026-03-23", "y": 1750.0}, {"x": "2026-03-24", "y": 1750.0}, {"x": "2026-03-25", "y": 1750.0}, {"x": "2026-03-26", "y": 1750.0}, {"x": "2026-03-27", "y": 1750.0}, {"x": "2026-03-30", "y": 1750.0}, {"x": "2026-03-31", "y": 1750.0}, {"x": "2026-04-01", "y": 1750.0}, {"x": "2026-04-02", "y": 1750.0}, {"x": "2026-04-06", "y": 1750.0}, {"x": "2026-04-07", "y": 1750.0}, {"x": "2026-04-08", "y": 1750.0}, {"x": "2026-04-09", "y": 1750.0}, {"x": "2026-04-10", "y": 1750.0}, {"x": "2026-04-13", "y": 1750.0}, {"x": "2026-04-14", "y": 1750.0}, {"x": "2026-04-15", "y": 1750.0}, {"x": "2026-04-16", "y": 1750.0}, {"x": "2026-04-17", "y": 1750.0}, {"x": "2026-04-20", "y": 1700.0}, {"x": "2026-04-21", "y": 1700.0}, {"x": "2026-04-22", "y": 1700.0}, {"x": "2026-04-23", "y": 1700.0}, {"x": "2026-04-24", "y": 1700.0}, {"x": "2026-04-27", "y": 1700.0}, {"x": "2026-04-28", "y": 1700.0}, {"x": "2026-04-29", "y": 1700.0}, {"x": "2026-04-30", "y": 1700.0}, {"x": "2026-05-01", "y": 1700.0}, {"x": "2026-05-04", "y": 1700.0}, {"x": "2026-05-05", "y": 1650.0}, {"x": "2026-05-06", "y": 1600.0}, {"x": "2026-05-07", "y": 1550.0}, {"x": "2026-05-08", "y": 1550.0}, {"x": "2026-05-11", "y": 1550.0}, {"x": "2026-05-12", "y": 1550.0}, {"x": "2026-05-13", "y": 1550.0}, {"x": "2026-05-14", "y": 1550.0}, {"x": "2026-05-15", "y": 1550.0}, {"x": "2026-05-18", "y": 1550.0}, {"x": "2026-05-19", "y": 1550.0}, {"x": "2026-05-20", "y": 1550.0}, {"x": "2026-05-21", "y": 1550.0}, {"x": "2026-05-22", "y": 1550.0}, {"x": "2026-05-26", "y": 1500.0}, {"x": "2026-05-27", "y": 1500.0}, {"x": "2026-05-28", "y": 1500.0}, {"x": "2026-05-29", "y": 1500.0}], "borderColor": "#e8a838", "backgroundColor": "#e8a83822", "borderWidth": 2, "pointRadius": 0, "tension": 0.3, "fill": false, "yAxisID": "yRu"}];
 
-new Chart(document.getElementById('priceChart'), {
+// 计算数据的时间范围（以最新数据日为基准，而非浏览器当前时间）
+let maxT = 0, minT = Infinity;
+datasets.forEach(ds => ds.data.forEach(p => {
+  const t = new Date(p.x).getTime();
+  if (t > maxT) maxT = t;
+  if (t < minT) minT = t;
+}));
+const DAY_MS = 86400000;
+// 四个时间维度：窗口天数 + x 轴刻度单位
+const RANGES = {
+  '天':   { days: 30,   unit: 'day'     },
+  '周':   { days: 90,   unit: 'week'    },
+  '月':   { days: 365,  unit: 'month'   },
+  '季度': { days: null, unit: 'quarter' },
+};
+const DEFAULT_RANGE = '天';
+const _ir = RANGES[DEFAULT_RANGE];
+const _initMin = _ir.days ? Math.max(minT, maxT - _ir.days * DAY_MS) : minT;
+
+const priceChart = new Chart(document.getElementById('priceChart'), {
   type: 'line',
   data: { datasets },
   options: {
@@ -1234,8 +1328,10 @@ new Chart(document.getElementById('priceChart'), {
     scales: {
       x: {
         type: 'time',
-        time: { unit: 'month', tooltipFormat: 'yyyy-MM-dd' },
-        ticks: { color: '#64748b', maxTicksLimit: 12 },
+        min: _initMin,
+        max: maxT,
+        time: { unit: _ir.unit, tooltipFormat: 'yyyy-MM-dd' },
+        ticks: { color: '#64748b', maxTicksLimit: 12, autoSkip: true },
         grid: { color: '#1e2535' }
       },
       yRu: {
@@ -1259,6 +1355,29 @@ new Chart(document.getElementById('priceChart'), {
     }
   }
 });
+
+/* 时间维度切换：天 / 周 / 月 / 季度 */
+function _fmtDate(ms) {
+  const d = new Date(ms);
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+function applyRange(key) {
+  const r = RANGES[key] || RANGES[DEFAULT_RANGE];
+  const cutoff = r.days ? Math.max(minT, maxT - r.days * DAY_MS) : minT;
+  priceChart.options.scales.x.min = cutoff;
+  priceChart.options.scales.x.max = maxT;
+  priceChart.options.scales.x.time.unit = r.unit;
+  priceChart.update();
+  document.querySelectorAll('.range-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.range === key));
+  const hint = document.getElementById('rangeHint');
+  if (hint) hint.textContent = '显示区间：' + _fmtDate(cutoff) + '  ~  ' + _fmtDate(maxT);
+}
+document.querySelectorAll('.range-btn').forEach(b =>
+  b.addEventListener('click', () => applyRange(b.dataset.range)));
+applyRange(DEFAULT_RANGE);
 
 /* 侧边栏高亮当前节 */
 const tocLinks = document.querySelectorAll('.toc-link');

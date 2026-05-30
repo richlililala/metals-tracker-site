@@ -552,76 +552,65 @@ def build_analysis_html(analysis: dict) -> str:
     # ── 四维分析卡片 ──────────────────────────────────────────────────────────
     dims = [
         {
-            "icon": "⛏",
-            "title": "供给端 · 产量",
-            "accent": "#a78bfa",
-            "points": [
-                ("南非垄断供应",
-                 "钌与铱均为铂族金属（PGM）开采的副产品，南非贡献全球供应量逾 80%。产量无法独立调节，"
-                 "完全随铂矿主矿开采节奏波动。"),
-                ("2026 年产量回升",
-                 "南非矿业公司在 2025 年 PGM 价格反弹后改善了利润率，工程库存集中处理与新矿山"
-                 "（Waterberg 等）爬坡推动今年产量温和增长，供给端边际宽松。"),
-                ("再生料供应增加",
-                 "欧洲汽车报废回收量回升，带动钌铱二次料供给小幅提升，进一步补充市场库存。"),
-            ],
-        },
-        {
             "icon": "📉",
-            "title": "需求端 · 市场",
+            "title": "需求端 · 钌铱分别归因（核心）",
             "accent": "#34d399",
             "points": [
-                ("绿氢电解槽需求降温",
-                 f"铱（PEM 电解槽阳极催化剂）与钌（AEM/SOEC 阴极材料）的最大新兴需求来自绿氢。"
-                 f"然而 2025-2026 年全球绿氢项目大规模延期——高利率推高资本成本，"
-                 f"欧盟 RED II 补贴落地迟缓，美国 IRA 执行存在不确定性，"
-                 f"导致电解槽采购量远低于预期。铱年用量缺口估算从 2t 收窄至 0.8t。"),
-                ("汽车 & 电子需求平稳",
-                 "铱的传统用途（火花塞、坩埚、笔尖合金）需求稳而无增。"
-                 "钌在硬盘 MAMR 读写头的应用因 AI 数据中心扩张有一定支撑，"
-                 "但整体规模相对有限，无法对冲绿氢端的疲软。"),
+                ("钌 ← 化工催化需求下滑（主拖累）",
+                 "Johnson Matthey 2026 PGM 报告预计<strong>钌全年需求 −6%</strong>，"
+                 "主因<strong>化工板块</strong>（硝酸、氯碱催化等）用量收缩，是钌价回落的直接推手。"),
+                ("钌 ← AI 硬盘需求其实是利好",
+                 "数据中心扩张带动硬盘（HDD 磁存储钌薄膜层）需求升至<strong>五年新高</strong>。"
+                 "⚠ 这是<strong>支撑项而非利空</strong>——钌的回调来自化工，不是 AI/存储端。"),
+                ("铱 ← 绿氢电解槽需求降温（主因）",
+                 "「工业需求走弱 + PEM 电解槽消耗低于预期」是铱下跌的直接原因。"
+                 "绿氢项目兑现速度明显慢于此前炒作时所定价的预期。"),
                 ("库存去化周期",
-                 "部分中间商在 2025 年底高点抢购备货，目前仍处于去库阶段，"
-                 "短期内压制采购意愿，买方议价力增强。"),
+                 "部分中间商在 2025 年底高点抢购备货，目前仍处去库阶段，"
+                 "短期压制采购意愿，买方议价力增强。"),
             ],
         },
         {
-            "icon": "🌐",
-            "title": "国际形势 · 宏观",
+            "icon": "🔄",
+            "title": "板块重置 · 同步回调",
             "accent": "#fb923c",
             "points": [
-                ("美元走强压制价格",
-                 "贵金属以美元计价，2026 年初美联储推迟降息预期，美元指数维持强势，"
-                 "机械性压低以美元标价的 PGM 商品价格。利率每推迟降息一次，"
-                 "大宗商品的持有成本即上升，边际买盘减少。"),
-                ("全球制造业 PMI 承压",
-                 "美欧制造业 PMI 在 2026 年 Q1 整体低于荣枯线，工业需求预期走弱，"
-                 "市场提前定价需求侧的不确定性，导致投机性多头减仓。"),
-                ("南非能源与劳工局势改善",
-                 "Eskom 限电频率较 2024 年峰值显著下降，矿山开工率恢复，"
-                 "此前因停电导致的供应中断溢价部分消退，令铱、钌价格失去一个"
-                 "重要的地缘/基础设施支撑因素。"),
-                ("俄乌冲突影响趋于稳定",
-                 "俄罗斯铂族金属产量（主要为铂钯）的制裁扰动已被市场充分定价；"
-                 "钌铱主要产地在南非，对俄罗斯供应链的直接暴露有限。"),
+                ("整个 PGM 板块「价格重置」",
+                 "Heraeus 2026 年度预测明确指出：<strong>2026 上半年 PGM 价格将整体下行重置</strong>。"
+                 "钌、铱 4 月起<strong>同步见顶、同步阴跌</strong>，正是板块级回调、而非单一金属供应事故。"),
+                ("高位有大涨在先",
+                 "铂金 2026 年 1 月刚创历史新高，整个铂族金属在过去一年涨幅惊人；"
+                 "钌从 2025/5 低点 $615 → 2026/3 高点 $1,750（<strong>+184%</strong>），"
+                 "铱同期 +95%。涨多必有回，技术性挤泡沫。"),
+                ("宏观面偏空",
+                 "2026 年初美元偏强、美欧制造业 PMI 承压，以美元计价的工业贵金属"
+                 "边际买盘减少，投机多头顺势减仓。"),
             ],
         },
         {
-            "icon": "📊",
-            "title": "市场情绪 · 周期",
+            "icon": "⚗",
+            "title": "替代技术 · 压住高点",
             "accent": "#38bdf8",
             "points": [
-                ("年内大涨后的正常回调",
-                 f"钌从 2025 年 5 月低点 $615 飙升至 2026 年 3 月高点 $1,750，涨幅达 +184%；"
-                 f"铱同期从 $4,100 升至 $8,000（+95%）。Heraeus 等机构在年初即预警："
-                 f"2026 上半年将是「价格重置与整合」窗口期，当前回撤是健康的技术性修正，"
-                 f"并非基本面逆转。"),
-                ("投机资金撤出",
-                 "PGM ETF 和大宗商品基金在高点获利了结，做空力量阶段性主导价格；"
-                 "现货市场买气偏谨慎，交易商倾向观望待确认方向后再建仓。"),
-                ("长期结构性需求仍支撑",
-                 "SFA(Oxford) 等机构维持长期看多：绿氢电解槽一旦大规模商业化，"
-                 "钌铱需求或进入结构性短缺。当前调整被视为买点，而非趋势反转。"),
+                ("铱：减量化突破封顶价格",
+                 "牛津大学将 PEM 电解槽<strong>铱用量削减 70%</strong>，西北大学研发出可媲美铱的"
+                 "替代催化剂。金属越贵、买家越倾向减量/替代，直接给铱的投机高点封顶并加速回调。"),
+                ("投机资金获利了结",
+                 "PGM ETF 与大宗商品基金在高点止盈，现货买气转谨慎，"
+                 "交易商倾向观望、待方向明朗再建仓。"),
+            ],
+        },
+        {
+            "icon": "⛏",
+            "title": "供给端 · 平稳（非诱因）",
+            "accent": "#a78bfa",
+            "points": [
+                ("供给稳定，这轮跌的是需求/情绪",
+                 "钌铱均为 PGM 副产品，南非贡献全球逾 80%，产量无法独立调节。"
+                 "本轮供给<strong>没有明显放量</strong>，因此价格走弱由需求与情绪驱动，而非供应过剩。"),
+                ("基本面仍是短缺（回调≠反转）",
+                 "Metals Focus 估 2026 年<strong>钌仍缺口约 20.3 万盎司</strong>，铱亦维持小幅短缺；"
+                 "供给弹性极低。SFA(Oxford)、JM 维持长期看多——当前是高位修正，不是趋势逆转。"),
             ],
         },
     ]
@@ -651,17 +640,21 @@ def build_analysis_html(analysis: dict) -> str:
       <div class="outlook-grid">
         <div class="outlook-item bearish">
           <div class="outlook-tag">短期 · 承压</div>
-          <div>绿氢需求兑现慢于预期、南非产量回升、美元维持强势，
-          预计 2026 年 Q2-Q3 价格仍面临下行压力；<br>
+          <div>板块「价格重置」未结束（Heraeus：2026 上半年 PGM 整体下行）、
+          铱绿氢兑现慢 + 替代技术压顶、钌化工需求疲软，预计 Q2–Q3 仍有下行压力；<br>
           钌支撑位约 <strong>$1,400</strong>，铱关注 <strong>$6,800</strong>。</div>
         </div>
         <div class="outlook-item bullish">
           <div class="outlook-tag">长期 · 看多</div>
-          <div>一旦全球绿氢项目进入集中建设期（预计 2027 起），
-          铱铱需求将面临系统性短缺，供给弹性极低；<br>
-          钌在 AI 硬盘存储（MAMR）与氨合成催化领域亦具结构性增量。</div>
+          <div>基本面仍是<strong>短缺</strong>（钌 2026 缺口 ~20.3 万 oz、铱小幅短缺），供给弹性极低；<br>
+          钌受 <strong>AI 数据中心硬盘存储</strong>需求拉动（已创五年新高），
+          铱则看 <strong>绿氢 PEM 电解槽</strong>规模化商用——当前回调被机构视为买点而非反转。</div>
         </div>
       </div>
+    </div>
+    <div class="analysis-src">
+      数据来源：Johnson Matthey 2026 PGM 市场报告 · Heraeus 2026 贵金属预测 ·
+      Metals Focus · SFA (Oxford) · iMARC（铱价 2026）。价格走势基于 Umicore 官方数据。
     </div>"""
 
     return f"""
@@ -996,6 +989,26 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
   .chart-title {{ font-size: 13px; color: #94a3b8; margin-bottom: 14px; }}
   canvas {{ width: 100% !important; }}
 
+  /* 时间维度切换 */
+  .chart-head {{
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
+  }}
+  .chart-head .chart-title {{ margin-bottom: 0; }}
+  .range-tabs {{
+    display: inline-flex; gap: 2px; padding: 3px;
+    background: #0f1117; border: 1px solid #232a3a; border-radius: 9px;
+  }}
+  .range-btn {{
+    font: inherit; font-size: 12px; font-weight: 600;
+    color: #94a3b8; background: transparent;
+    border: none; border-radius: 6px; padding: 5px 14px;
+    cursor: pointer; transition: all .15s;
+  }}
+  .range-btn:hover {{ color: #e2e8f0; background: #1a2030; }}
+  .range-btn.active {{ color: #0f1117; background: #e8a838; }}
+  .range-hint {{ font-size: 11px; color: #475569; margin-top: 8px; text-align: right; }}
+
   /* ── 分析 / 产业链区（公共）───────────────────────────────────── */
   .analysis-section,
   .sc-section {{
@@ -1070,6 +1083,9 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
   .bearish .outlook-tag {{ color: #f87171; }}
   .bullish .outlook-tag {{ color: #34d399; }}
   .outlook-item strong {{ color: #e2e8f0; }}
+  .analysis-src {{
+    margin-top: 12px; font-size: 11px; color: #475569; line-height: 1.7;
+  }}
 
   /* ── 产业链地图 ─────────────────────────────────────────────────── */
   .sc-card {{ background: #1a1f2e; border-radius: 12px; padding: 20px 22px; }}
@@ -1320,8 +1336,17 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
 
     <!-- 历史图表 -->
     <section id="chart" class="chart-section">
-      <div class="chart-title">历史价格走势 · 多数据源对比（实线=Umicore，虚线=JM/BASF）</div>
+      <div class="chart-head">
+        <div class="chart-title">历史价格走势 · 多数据源对比（实线=Umicore，虚线=JM/BASF）</div>
+        <div class="range-tabs" id="rangeTabs">
+          <button class="range-btn active" data-range="天">天</button>
+          <button class="range-btn" data-range="周">周</button>
+          <button class="range-btn" data-range="月">月</button>
+          <button class="range-btn" data-range="季度">季度</button>
+        </div>
+      </div>
       <canvas id="priceChart" height="80"></canvas>
+      <div class="range-hint" id="rangeHint"></div>
     </section>
 
     <!-- 价格分析 -->
@@ -1355,7 +1380,26 @@ def build_html(rows, latest, recent, analysis, source_compare, powder, today_ale
 <script>
 const datasets = {datasets_json};
 
-new Chart(document.getElementById('priceChart'), {{
+// 计算数据的时间范围（以最新数据日为基准，而非浏览器当前时间）
+let maxT = 0, minT = Infinity;
+datasets.forEach(ds => ds.data.forEach(p => {{
+  const t = new Date(p.x).getTime();
+  if (t > maxT) maxT = t;
+  if (t < minT) minT = t;
+}}));
+const DAY_MS = 86400000;
+// 四个时间维度：窗口天数 + x 轴刻度单位
+const RANGES = {{
+  '天':   {{ days: 30,   unit: 'day'     }},
+  '周':   {{ days: 90,   unit: 'week'    }},
+  '月':   {{ days: 365,  unit: 'month'   }},
+  '季度': {{ days: null, unit: 'quarter' }},
+}};
+const DEFAULT_RANGE = '天';
+const _ir = RANGES[DEFAULT_RANGE];
+const _initMin = _ir.days ? Math.max(minT, maxT - _ir.days * DAY_MS) : minT;
+
+const priceChart = new Chart(document.getElementById('priceChart'), {{
   type: 'line',
   data: {{ datasets }},
   options: {{
@@ -1377,8 +1421,10 @@ new Chart(document.getElementById('priceChart'), {{
     scales: {{
       x: {{
         type: 'time',
-        time: {{ unit: 'month', tooltipFormat: 'yyyy-MM-dd' }},
-        ticks: {{ color: '#64748b', maxTicksLimit: 12 }},
+        min: _initMin,
+        max: maxT,
+        time: {{ unit: _ir.unit, tooltipFormat: 'yyyy-MM-dd' }},
+        ticks: {{ color: '#64748b', maxTicksLimit: 12, autoSkip: true }},
         grid: {{ color: '#1e2535' }}
       }},
       yRu: {{
@@ -1402,6 +1448,29 @@ new Chart(document.getElementById('priceChart'), {{
     }}
   }}
 }});
+
+/* 时间维度切换：天 / 周 / 月 / 季度 */
+function _fmtDate(ms) {{
+  const d = new Date(ms);
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}}
+function applyRange(key) {{
+  const r = RANGES[key] || RANGES[DEFAULT_RANGE];
+  const cutoff = r.days ? Math.max(minT, maxT - r.days * DAY_MS) : minT;
+  priceChart.options.scales.x.min = cutoff;
+  priceChart.options.scales.x.max = maxT;
+  priceChart.options.scales.x.time.unit = r.unit;
+  priceChart.update();
+  document.querySelectorAll('.range-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.range === key));
+  const hint = document.getElementById('rangeHint');
+  if (hint) hint.textContent = '显示区间：' + _fmtDate(cutoff) + '  ~  ' + _fmtDate(maxT);
+}}
+document.querySelectorAll('.range-btn').forEach(b =>
+  b.addEventListener('click', () => applyRange(b.dataset.range)));
+applyRange(DEFAULT_RANGE);
 
 /* 侧边栏高亮当前节 */
 const tocLinks = document.querySelectorAll('.toc-link');
